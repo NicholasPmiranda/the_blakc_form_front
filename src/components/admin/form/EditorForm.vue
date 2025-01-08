@@ -11,6 +11,8 @@ import draggable from "vuedraggable";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import ArquivoInput from "@/components/admin/form/tiposRespostas/ArquivoInput.vue";
+import RangeInput from "@/components/admin/form/tiposRespostas/RangeInput.vue";
+import ConfigRange from "@/components/admin/form/config/ConfigRange.vue";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -65,7 +67,10 @@ function deleteQuestao(questao, index) {
 
 editFormStore.listarQuestoes(route.params.id)
 
+function openConfig(element){
+    visibleConfig.value = true
 
+}
 watch(
     () => editFormStore.questao_select.tipo,
     async (newVal, oldVal) => {
@@ -73,7 +78,8 @@ watch(
             clearTimeout(editFormStore.saveTimeout)
         }
         editFormStore.saveTimeout = setTimeout(async () => {
-            if (newVal !== oldVal) {
+            if (newVal !== oldVal && oldVal !== '' ) {
+                console.log(newVal, oldVal)
                 await editFormStore.updateTipo()
             }
         }, 500)
@@ -119,7 +125,7 @@ watch(
                                 <div class="flex justify-end " v-if="element.id === editFormStore.questao_select.id">
                                     <Button variant="text" @click="deleteQuestao(element, index)" size="small"
                                             icon="pi pi-trash"/>
-                                    <Button variant="text" size="small" @click="visibleConfig = true" icon="pi pi-cog"/>
+                                    <Button variant="text" size="small" @click="openConfig(element)" icon="pi pi-cog"/>
                                 </div>
                             </div>
                         </div>
@@ -151,6 +157,7 @@ watch(
                     <EmailInput v-if="editFormStore.questao_select.tipo === 'email'" />
                     <AlternativasInput v-if="editFormStore.questao_select.tipo === 'alternativas' "/>
                     <ArquivoInput v-if="editFormStore.questao_select.tipo === 'arquivo' "/>
+                    <RangeInput v-if="editFormStore.questao_select.tipo === 'range' "/>
                 </div>
             </template>
         </Card>
@@ -159,9 +166,8 @@ watch(
     <Drawer v-model:visible="visibleConfig" header="Configuracao questao"
             class="!w-full md:!w-80 lg:!w-[30rem]"
             position="right">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat.</p>
+        <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'" />
+
     </Drawer>
 </template>
 <style scoped>
@@ -173,7 +179,6 @@ watch(
 }
 
 .hover-componente:hover {
-
     background-color: #150f21;
 }
 

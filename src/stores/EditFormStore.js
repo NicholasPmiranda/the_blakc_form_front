@@ -6,13 +6,14 @@ export const useEditFormStore = defineStore('editFormStore', {
         lista_questao: null,
         questao_select: {
             id: 0,
-            tipo: "texto_simples",
+            tipo: "",
             alternativas: [
                 {name: "Accounting", key: 1},
                 {name: "Marketing", key: 2},
                 {name: "Production", key: 3},
                 {name: "Research", key: 4}
-            ]
+            ],
+
         },
         saveTimeout: null,
     }),
@@ -59,6 +60,7 @@ export const useEditFormStore = defineStore('editFormStore', {
             this.questao_select = questao
             return true
         },
+
 
         updateTipoQuestaoSelect(tipo) {
             this.questao_select.tipo = tipo
@@ -130,6 +132,17 @@ export const useEditFormStore = defineStore('editFormStore', {
             try {
                 await Axios.post('api/questoes/descricao/update', {
                     descricao: this.questao_select.descricao,
+                    questao_id: this.questao_select.id
+                })
+            } catch (error) {
+                console.error('Erro ao atualizar descrição:', error)
+            }
+        },
+
+        async updateConfig() {
+            try {
+                await Axios.post('api/questoes/config/update', {
+                    config: this.questao_select.config,
                     questao_id: this.questao_select.id
                 })
             } catch (error) {
