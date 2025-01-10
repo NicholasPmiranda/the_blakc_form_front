@@ -1,5 +1,6 @@
 import {Axios} from "@/axios.js";
 import {defineStore} from 'pinia'
+import {useToast} from 'primevue/usetoast';
 
 export const useEditFormStore = defineStore('editFormStore', {
     state: () => ({
@@ -13,7 +14,11 @@ export const useEditFormStore = defineStore('editFormStore', {
                 {name: "Production", key: 3},
                 {name: "Research", key: 4}
             ],
-
+            config: [],
+        },
+        regra_resposta: {
+            pergunta: '',
+            resposta: ''
         },
         saveTimeout: null,
     }),
@@ -102,6 +107,56 @@ export const useEditFormStore = defineStore('editFormStore', {
                 await Axios.post('api/questoes/order/update', {
                     questoes: this.lista_questao
                 })
+            } catch (error) {
+                console.error('Erro ao atualizar ordem:', error)
+            }
+        },
+
+        async updateRegraResposta() {
+            try {
+                var validade = true;
+                this.questao_select.config.regras_resposta.forEach((resposta) => {
+                    if (resposta.resposta === this.regra_resposta.resposta) {
+                        validade = false;
+                    }
+                })
+
+                console.log("validade", validade)
+                if(validade){
+                    this.questao_select.config.regras_resposta.push({
+                        resposta: this.regra_resposta.resposta,
+                        pergunta: this.regra_resposta.pergunta
+                    })
+
+
+                    await Axios.post('api/questoes/config/update', {
+                        config: this.questao_select.config,
+                        questao_id: this.questao_select.id
+                    })
+
+                    this.regra_resposta.resposta = ''
+                    this.regra_resposta.pergunta = ''
+
+                    return true;
+
+                }
+
+
+            } catch (error) {
+                console.error('Erro ao atualizar ordem:', error)
+            }
+        },
+
+        async removerRegra(index) {
+            try {
+                this.questao_select.config.regras_resposta.splice(index, 1)
+                await Axios.post('api/questoes/config/update', {
+                    config: this.questao_select.config,
+                    questao_id: this.questao_select.id
+                })
+
+                this.regra_resposta.resposta = ''
+                this.regra_resposta.pergunta = ''
             } catch (error) {
                 console.error('Erro ao atualizar ordem:', error)
             }

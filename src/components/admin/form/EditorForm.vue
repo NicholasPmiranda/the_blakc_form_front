@@ -13,6 +13,7 @@ import { useToast } from "primevue/usetoast";
 import ArquivoInput from "@/components/admin/form/tiposRespostas/ArquivoInput.vue";
 import RangeInput from "@/components/admin/form/tiposRespostas/RangeInput.vue";
 import ConfigRange from "@/components/admin/form/config/ConfigRange.vue";
+import RegrasRespostas from "@/components/admin/form/regrasRespostas/RegrasRespostas.vue";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -164,9 +165,11 @@ watch(
     </div>
 
     <Drawer v-model:visible="visibleConfig" header="Configuracao questao"
-            class="!w-full md:!w-80 lg:!w-[30rem]"
+            class="!w-full md:!w-80 lg:!w-[40rem]"
             position="right">
         <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'" />
+
+        <RegrasRespostas/>
 
     </Drawer>
 </template>
