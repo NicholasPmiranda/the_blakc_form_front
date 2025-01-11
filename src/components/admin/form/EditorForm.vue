@@ -14,6 +14,8 @@ import ArquivoInput from "@/components/admin/form/tiposRespostas/ArquivoInput.vu
 import RangeInput from "@/components/admin/form/tiposRespostas/RangeInput.vue";
 import ConfigRange from "@/components/admin/form/config/ConfigRange.vue";
 import RegrasRespostas from "@/components/admin/form/regrasRespostas/RegrasRespostas.vue";
+import Calendario from "@/components/admin/form/tiposRespostas/Calendario.vue";
+import ConfigCalendario from "@/components/admin/form/config/ConfigCalendario.vue";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -27,13 +29,15 @@ const tipos_pergunta = reactive([
     'alternativas',
     'email',
     'range',
-    'arquivo'
+    'arquivo',
+    'data'
 
 ])
 const badge_map = reactive({
     texto_simples: 'primary',
     alternativas: 'success',
     email: 'warn',
+    data: 'warn',
     range: 'info',
     arquivo:'danger'
 })
@@ -159,6 +163,7 @@ watch(
                     <AlternativasInput v-if="editFormStore.questao_select.tipo === 'alternativas' "/>
                     <ArquivoInput v-if="editFormStore.questao_select.tipo === 'arquivo' "/>
                     <RangeInput v-if="editFormStore.questao_select.tipo === 'range' "/>
+                    <Calendario v-if="editFormStore.questao_select.tipo === 'data' "/>
                 </div>
             </template>
         </Card>
@@ -167,9 +172,11 @@ watch(
     <Drawer v-model:visible="visibleConfig" header="Configuracao questao"
             class="!w-full md:!w-80 lg:!w-[40rem]"
             position="right">
-        <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'" />
 
         <RegrasRespostas/>
+
+        <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'" />
+        <ConfigCalendario  v-if="editFormStore.questao_select.tipo === 'data'" />
 
     </Drawer>
 </template>

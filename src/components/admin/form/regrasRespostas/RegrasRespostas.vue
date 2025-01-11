@@ -1,6 +1,6 @@
 <script setup>
 import {FloatLabel, Select, Button} from "primevue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {useEditFormStore} from "@/stores/EditFormStore.js";
 import {useToast} from "primevue/usetoast";
 import {useConfirm} from "primevue/useconfirm";
@@ -12,15 +12,28 @@ const editFormStore = useEditFormStore()
 
 const tipos = ref([])
 
-async  function addRegra(){
-    var resposta = await editFormStore.updateRegraResposta()
+async function addRegra() {
+    var resposta = await editFormStore.addRegraResposta()
 
-    if(resposta === true){
+    if (resposta === true) {
         toast.add({severity: 'success', summary: 'sucesso', detail: 'Regra salva com sucesso', life: 3000});
-    }else{
-        toast.add({severity: 'error', summary: 'Erro', detail: 'Nao pode ter duas regras pra mesma resposta', life: 3000});
+    } else {
+        toast.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Nao pode ter duas regras pra mesma resposta',
+            life: 3000
+        });
     }
 }
+
+async function update() {
+    await editFormStore.updateRegraResposta()
+
+    toast.add({severity: 'success', summary: 'sucesso', detail: 'Regra salva com sucesso', life: 3000});
+}
+
+
 function deleteRegra(regra, index) {
     confirm.require({
         message: 'Voce realmente ques remover esta regra ?',
@@ -86,16 +99,16 @@ function deleteRegra(regra, index) {
     </div>
 
 
-
     <div class=" mt-10">
         <h1>Lista Regras</h1>
 
         <div class="flex justify-center items-end gap-3 w-full"
-            v-for="(regra, index) in editFormStore.questao_select.config.regras_resposta"
+             v-for="(regra, index) in editFormStore.questao_select.config.regras_resposta"
         >
             <FloatLabel class="w-1/2  mt-8">
                 <Select inputId="over_label"
                         :options="editFormStore.questao_select.alternativas"
+                        @change="update"
                         v-model="regra.resposta"
                         filter
                         optionLabel="name"
@@ -107,6 +120,7 @@ function deleteRegra(regra, index) {
             <FloatLabel class="w-1/2  mt-8">
                 <Select inputId="over_label"
                         :options="editFormStore.lista_questao"
+                        @change="update"
                         v-model="regra.pergunta"
                         filter
                         optionLabel="titulo"
@@ -116,7 +130,8 @@ function deleteRegra(regra, index) {
                 />
                 <label for="over_label">Pergunta</label>
             </FloatLabel>
-            <Button variant="text" size="small" @click="deleteRegra(regra, index)"  severity="danger" icon="pi pi-trash" />
+            <Button variant="text" size="small" @click="deleteRegra(regra, index)" severity="danger"
+                    icon="pi pi-trash"/>
 
         </div>
     </div>

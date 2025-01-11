@@ -112,7 +112,13 @@ export const useEditFormStore = defineStore('editFormStore', {
             }
         },
 
-        async updateRegraResposta() {
+        async updateRegraResposta(){
+            await Axios.post('api/questoes/config/update', {
+                config: this.questao_select.config,
+                questao_id: this.questao_select.id
+            })
+        },
+        async addRegraResposta() {
             try {
                 var validade = true;
                 this.questao_select.config.regras_resposta.forEach((resposta) => {

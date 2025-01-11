@@ -12,6 +12,7 @@ import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import 'primeicons/primeicons.css'
 
+
 const Noir = definePreset(Aura, {
     components: {
         // button:{
@@ -76,6 +77,18 @@ app.use(router)
 
 
 app.use(PrimeVue, {
+    locale:{
+        dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+        dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+        dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
+        monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+        today: 'Hoje',
+        clear: 'Limpar',
+        weekHeader: 'Sem',
+        firstDayOfWeek: 1,
+        dateFormat: 'dd/mm/yy'
+    },
     theme: {
         preset:Noir
     },
