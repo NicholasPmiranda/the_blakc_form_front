@@ -15,6 +15,12 @@ const router = createRouter({
                 },
 
 
+                {
+                    path: '/questionario/:id',
+                    name: 'login',
+                    component: () => import('../views/Questionario/Questionario.vue'),
+                },
+
             ]
         },
 

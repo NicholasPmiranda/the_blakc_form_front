@@ -11,7 +11,7 @@ const pixelStore = usePixelStore()
 const route = useRoute()
 const toast = useToast()
 const gmt_modal = ref(false)
-const pixel_modal = ref(true)
+const pixel_modal = ref(false)
 
 function openGmt(){
     gtmStore.getTags(route.params.id)

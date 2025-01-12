@@ -1,5 +1,5 @@
 <script setup>
-import {FloatLabel, Select, Button} from "primevue";
+import {FloatLabel, Select, Button,InputText} from "primevue";
 import {ref, watch} from "vue";
 import {useEditFormStore} from "@/stores/EditFormStore.js";
 import {useToast} from "primevue/usetoast";
@@ -67,13 +67,20 @@ function deleteRegra(regra, index) {
     </p>
 
     <div class="mt-8 flex justify-center items-end   gap-3 w-full">
-        <FloatLabel class="w-1/2  mt-8">
+        <FloatLabel class="w-1/2  mt-8" v-if="editFormStore.questao_select.tipo === 'alternativas'">
             <Select inputId="over_label"
                     :options="editFormStore.questao_select.alternativas"
                     v-model="editFormStore.regra_resposta.resposta"
                     filter
                     optionLabel="name"
                     optionValue="name"
+                    class="w-full"
+            />
+            <label for="over_label">Resposta</label>
+        </FloatLabel>
+        <FloatLabel class="w-1/2  mt-8" v-else>
+            <InputText inputId="over_label"
+                    v-model="editFormStore.regra_resposta.resposta"
                     class="w-full"
             />
             <label for="over_label">Resposta</label>

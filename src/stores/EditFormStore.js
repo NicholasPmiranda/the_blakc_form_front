@@ -1,19 +1,14 @@
 import {Axios} from "@/axios.js";
 import {defineStore} from 'pinia'
-import {useToast} from 'primevue/usetoast';
 
 export const useEditFormStore = defineStore('editFormStore', {
     state: () => ({
         lista_questao: null,
+        form_select: {},
         questao_select: {
             id: 0,
             tipo: "",
-            alternativas: [
-                {name: "Accounting", key: 1},
-                {name: "Marketing", key: 2},
-                {name: "Production", key: 3},
-                {name: "Research", key: 4}
-            ],
+            alternativas: [],
             config: [],
         },
         regra_resposta: {
@@ -35,8 +30,6 @@ export const useEditFormStore = defineStore('editFormStore', {
             this.lista_questao = data
             this.questao_select = data[0]
 
-            // Configura os watchers após carregar os dados
-            this.setupAutoSave()
 
             return true
         },
@@ -58,6 +51,14 @@ export const useEditFormStore = defineStore('editFormStore', {
         async removerQuestao(questao_id, index) {
             const request = await Axios.delete(`/api/questoes/${questao_id}`)
             this.lista_questao.splice(index, 1)
+            return true
+        },
+
+        async updateObrigatorio(questao_id, index) {
+            await Axios.post('api/questoes/obrigatorio/update', {
+                questao_id: this.questao_select.id
+            })
+
             return true
         },
 
@@ -112,7 +113,7 @@ export const useEditFormStore = defineStore('editFormStore', {
             }
         },
 
-        async updateRegraResposta(){
+        async updateRegraResposta() {
             await Axios.post('api/questoes/config/update', {
                 config: this.questao_select.config,
                 questao_id: this.questao_select.id
@@ -128,7 +129,7 @@ export const useEditFormStore = defineStore('editFormStore', {
                 })
 
                 console.log("validade", validade)
-                if(validade){
+                if (validade) {
                     this.questao_select.config.regras_resposta.push({
                         resposta: this.regra_resposta.resposta,
                         pergunta: this.regra_resposta.pergunta
@@ -197,6 +198,15 @@ export const useEditFormStore = defineStore('editFormStore', {
                 })
             } catch (error) {
                 console.error('Erro ao atualizar descrição:', error)
+            }
+        },
+
+        async getForm(form_id) {
+            try {
+                const form = await Axios.get('api/form/' + form_id)
+                this.form_select = form.data
+            } catch (error) {
+                console.error('Erro :', error)
             }
         },
 

@@ -3,35 +3,35 @@ import { useEditFormStore } from "@/stores/EditFormStore.js";
 import { DatePicker } from "primevue";
 import {ref} from "vue";
 
-const ediFormStore = useEditFormStore();
+const editFormStore = useEditFormStore();
 
-const locale = ref({
-        firstDayOfWeek: 0,
-        dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-        dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
-        dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
-        monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-        monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-        today: 'Hoje',
-        clear: 'Limpar'
-    })
 ;</script>
 
 <template>
     <div>
-        <input autofocus v-model="ediFormStore.questao_select.titulo"
-               value="qual sua pergunta ?"
+        <input autofocus v-model="editFormStore.questao_select.titulo"
                class="input-pergunta" />
 
-        <input v-model="ediFormStore.questao_select.descricao"
-               value="Sua opinião é muito importante pra gente."
+        <input v-model="editFormStore.questao_select.descricao"
                class="input-descricao" />
-
         <div class="mt-20">
-            <DatePicker v-model="date"
+            <DatePicker v-model="date" v-if="editFormStore.questao_select.config.tipo_calendario === 'data simples'"
                         :locale="locale"
                         dateFormat="dd/mm/yy"
                         class="w-full sm:w-[30rem]" />
+
+            <DatePicker v-model="date" v-if="editFormStore.questao_select.config.tipo_calendario === 'multiplas datas'"
+                        :locale="locale"
+                        selectionMode="multiple"
+                        dateFormat="dd/mm/yy"
+                        class="w-full sm:w-[30rem]" />
+
+            <DatePicker v-model="date" v-if="editFormStore.questao_select.config.tipo_calendario === 'intervalo de datas'"
+                        :locale="locale"
+                        selectionMode="range"
+                        dateFormat="dd/mm/yy"
+                        class="w-full sm:w-[30rem]" />
+
 
         </div>
     </div>

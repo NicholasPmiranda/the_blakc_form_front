@@ -24,7 +24,6 @@ import Utms from "@/components/admin/form/config/Utms.vue";
                 <AccordionPanel value="2">
                     <AccordionHeader>
                         <Button label="Integracoes" variant="text" />
-
                     </AccordionHeader>
                     <AccordionContent>
                             <Integracoes/>

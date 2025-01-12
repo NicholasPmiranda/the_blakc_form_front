@@ -1,6 +1,9 @@
 <script setup>
-import {Button, FloatLabel, Select} from "primevue";
+import {FloatLabel, Select} from "primevue";
 import {ref} from "vue";
+import {useEditFormStore} from "@/stores/EditFormStore.js";
+
+const editFormStore = useEditFormStore()
 
 const tipos_calendario = ref([
     'data simples',
@@ -18,11 +21,13 @@ const tipos_calendario = ref([
         <div class="mt-8 flex justify-center items-end   gap-3 w-full">
             <FloatLabel class="w-full  mt-8">
                 <Select
-                        :options="tipos_calendario"
-                        filte
-                        class="w-full"
+                    @change="editFormStore.updateConfig"
+                    v-model="editFormStore.questao_select.config.tipo_calendario"
+                    :options="tipos_calendario"
+                    filte
+                    class="w-full"
                 />
-                <label >Tipo de calendario</label>
+                <label>Tipo de calendario</label>
             </FloatLabel>
         </div>
     </div>

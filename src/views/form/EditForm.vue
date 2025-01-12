@@ -4,6 +4,7 @@ import {Button, ButtonGroup, Card} from "primevue";
 import {reactive, ref} from "vue";
 import EditoForm from "@/components/admin/form/EditorForm.vue";
 import ConfigForm from "@/components/admin/form/ConfigForm.vue";
+import Compartilhar from "@/components/admin/form/Compartilhar.vue";
 
 const lista_questao = reactive([1, 2, 3, 4])
 const route = useRoute()
@@ -57,6 +58,7 @@ function setTab(tab) {
     <div class="flex  ">
         <EditoForm v-if="tab_select === 'editor'"/>
         <ConfigForm v-if="tab_select === 'opcao'"/>
+        <Compartilhar v-if="tab_select === 'compartilhar'"/>
     </div>
 </template>
 

@@ -8,8 +8,8 @@ import EmailInput from "@/components/admin/form/tiposRespostas/EmailInput.vue";
 import {useEditFormStore} from "@/stores/EditFormStore.js";
 import {useRoute} from "vue-router";
 import draggable from "vuedraggable";
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
+import {useConfirm} from "primevue/useconfirm";
+import {useToast} from "primevue/usetoast";
 import ArquivoInput from "@/components/admin/form/tiposRespostas/ArquivoInput.vue";
 import RangeInput from "@/components/admin/form/tiposRespostas/RangeInput.vue";
 import ConfigRange from "@/components/admin/form/config/ConfigRange.vue";
@@ -39,7 +39,7 @@ const badge_map = reactive({
     email: 'warn',
     data: 'warn',
     range: 'info',
-    arquivo:'danger'
+    arquivo: 'danger'
 })
 
 function getSeverity(tipo) {
@@ -69,28 +69,22 @@ function deleteQuestao(questao, index) {
     });
 }
 
+async function updateObrigatorio() {
+    await editFormStore.updateObrigatorio()
+
+    toast.add({severity: 'success', summary: 'sucesso', detail: 'Questao atualizada com sucesso', life: 3000});
+
+}
+
 
 editFormStore.listarQuestoes(route.params.id)
 
-function openConfig(element){
+function openConfig(element) {
     visibleConfig.value = true
 
 }
-watch(
-    () => editFormStore.questao_select.tipo,
-    async (newVal, oldVal) => {
-        if (editFormStore.saveTimeout) {
-            clearTimeout(editFormStore.saveTimeout)
-        }
-        editFormStore.saveTimeout = setTimeout(async () => {
-            if (newVal !== oldVal && oldVal !== '' ) {
-                console.log(newVal, oldVal)
-                await editFormStore.updateTipo()
-            }
-        }, 500)
-    },
-    {deep: true}
-)
+
+
 </script>
 
 <template>
@@ -147,11 +141,16 @@ watch(
             <template #content>
                 <div class="flex justify-between items-center">
                     <div>
-                        <Select :options="tipos_pergunta" v-model="editFormStore.questao_select.tipo"/>
+                        <Select
+                            @change="editFormStore.updateTipo()"
+                            :options="tipos_pergunta"
+                            v-model="editFormStore.questao_select.tipo"
+                        />
                     </div>
                     <div>
                           <span class="flex items-center gap-2">
-                                <ToggleSwitch/>
+                                <ToggleSwitch @change="updateObrigatorio"
+                                              v-model="editFormStore.questao_select.obrigatorio"/>
                                 Obrigatório
                           </span>
                     </div>
@@ -159,7 +158,7 @@ watch(
 
                 <div class="h-screen-minus-165 flex justify-center items-center">
                     <TextoSimplesInput v-if="editFormStore.questao_select.tipo === 'texto_simples' "/>
-                    <EmailInput v-if="editFormStore.questao_select.tipo === 'email'" />
+                    <EmailInput v-if="editFormStore.questao_select.tipo === 'email'"/>
                     <AlternativasInput v-if="editFormStore.questao_select.tipo === 'alternativas' "/>
                     <ArquivoInput v-if="editFormStore.questao_select.tipo === 'arquivo' "/>
                     <RangeInput v-if="editFormStore.questao_select.tipo === 'range' "/>
@@ -175,8 +174,8 @@ watch(
 
         <RegrasRespostas/>
 
-        <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'" />
-        <ConfigCalendario  v-if="editFormStore.questao_select.tipo === 'data'" />
+        <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'"/>
+        <ConfigCalendario v-if="editFormStore.questao_select.tipo === 'data'"/>
 
     </Drawer>
 </template>
