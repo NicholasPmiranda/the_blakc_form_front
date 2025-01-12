@@ -14,7 +14,10 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
         pergunta_index: 0,
         resposta: '',
         user_id: uuidv4(),
-        form_id: null
+        form_id: null,
+        pixel:[],
+        gtm:[],
+
 
     }),
 
@@ -25,10 +28,13 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
                     form_id: form_id
                 }
             })
-            const {data} = request
+            const {questoes, form} = request.data
 
-            this.lista_questao = data
-            this.questao_select = data[0]
+            this.lista_questao = questoes
+            this.questao_select = questoes[0]
+
+            this.pixel = form.pixel
+            this.gtm = form.gtm
 
 
             return true
