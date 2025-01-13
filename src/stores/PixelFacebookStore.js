@@ -1,6 +1,5 @@
 import {Axios} from "@/axios.js";
 import {defineStore} from 'pinia'
-import {useToast} from "primevue/usetoast";
 
 export const usePixelStore = defineStore('pixelStore', {
     state: () => ({
@@ -13,7 +12,7 @@ export const usePixelStore = defineStore('pixelStore', {
 
         async getPixel(form_id) {
             try{
-                const request = await Axios.get('/api/pixel', {
+                const request = await Axios.get('/api/pixel/lista', {
                     params: {
                         form_id
                     }
@@ -21,7 +20,7 @@ export const usePixelStore = defineStore('pixelStore', {
 
                 this.list = request.data
             }catch (e) {
-                console.log(e.nome)
+                console.log(e)
             }
 
         },

@@ -28,6 +28,11 @@ function deleteGtm(index ,id){
     toast.add({severity:'success', detail:'Tag removida com sucesso',summary:'sucesso'})
 
 }
+function deletePixel(index ,id){
+    pixelStore.deletePixel(id,index)
+    toast.add({severity:'success', detail:'Pixel removida com sucesso',summary:'sucesso'})
+
+}
 </script>
 
 <template class="fle">
@@ -47,7 +52,7 @@ function deleteGtm(index ,id){
         </div>
     </div>
 
-    <Dialog v-model:visible="pixel_modal" modal header="PixelFacebook" :style="{ width: '75rem' }">
+    <Dialog v-model:visible="pixel_modal" modal header="Pixel Facebook" :style="{ width: '75rem' }">
         <span class="text-surface-500 dark:text-surface-400 block mb-8">Gerencie seus pixel do facebook</span>
         <div class="gap-y-4">
             <div class="flex flex-col">
@@ -74,7 +79,7 @@ function deleteGtm(index ,id){
                 <Column field="codigo" header="Codigo"></Column>
                 <Column field="Action" header="acoes">
                     <template #body="{data, index}">
-                        <Button variant="text" @click="deleteGtm (index,data.id)" icon="pi pi-trash" />
+                        <Button variant="text" @click="deletePixel(index,data.id)" icon="pi pi-trash" />
                     </template>
                 </Column>
             </DataTable>
