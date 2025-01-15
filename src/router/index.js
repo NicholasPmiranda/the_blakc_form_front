@@ -21,6 +21,12 @@ const router = createRouter({
                     component: () => import('../views/Questionario/Questionario.vue'),
                 },
 
+                // {
+                //     path: '/callendly',
+                //     name: 'login',
+                //     component: () => import('../views/integracoes/calendly.vue'),
+                // },
+
             ]
         },
 

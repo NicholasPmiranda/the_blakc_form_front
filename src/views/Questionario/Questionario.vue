@@ -15,6 +15,7 @@ import {useToast} from "primevue/usetoast";
 import {onMounted} from "vue";
 import Pixel from "@/components/rastreio/Pixel.vue";
 import Gtm from "@/components/rastreio/Gtm.vue";
+import Calendaly from "@/components/questionario/Calendaly.vue";
 
 
 const questionarioStore = useQuestionarioStore()
@@ -94,6 +95,8 @@ onMounted(async () => {
                     <ArquivoInput v-if="questionarioStore.questao_select.tipo === 'arquivo' "/>
                     <RangeInput v-if="questionarioStore.questao_select.tipo === 'range' "/>
                     <Calendario v-if="questionarioStore.questao_select.tipo === 'data' "/>
+                    <Calendaly v-if="questionarioStore.questao_select.tipo === 'calendaly'"/>
+
                 </div>
                 <div class="flex justify-end">
                     <Button @click="proximo"> Proximo</Button>

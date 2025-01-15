@@ -16,6 +16,7 @@ import ConfigRange from "@/components/admin/form/config/ConfigRange.vue";
 import RegrasRespostas from "@/components/admin/form/regrasRespostas/RegrasRespostas.vue";
 import Calendario from "@/components/admin/form/tiposRespostas/Calendario.vue";
 import ConfigCalendario from "@/components/admin/form/config/ConfigCalendario.vue";
+import Calendaly from "@/components/admin/form/tiposRespostas/Calendaly.vue";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -30,7 +31,8 @@ const tipos_pergunta = reactive([
     'email',
     'range',
     'arquivo',
-    'data'
+    'data',
+    'calendaly'
 
 ])
 const badge_map = reactive({
@@ -39,7 +41,8 @@ const badge_map = reactive({
     email: 'warn',
     data: 'warn',
     range: 'info',
-    arquivo: 'danger'
+    arquivo: 'danger',
+    calendaly: 'success'
 })
 
 function getSeverity(tipo) {
@@ -163,6 +166,7 @@ function openConfig(element) {
                     <ArquivoInput v-if="editFormStore.questao_select.tipo === 'arquivo' "/>
                     <RangeInput v-if="editFormStore.questao_select.tipo === 'range' "/>
                     <Calendario v-if="editFormStore.questao_select.tipo === 'data' "/>
+                    <Calendaly v-if="editFormStore.questao_select.tipo === 'calendaly'"/>
                 </div>
             </template>
         </Card>
