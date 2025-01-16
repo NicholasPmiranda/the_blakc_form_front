@@ -5,11 +5,12 @@ import {reactive, ref} from "vue";
 import EditoForm from "@/components/admin/form/EditorForm.vue";
 import ConfigForm from "@/components/admin/form/ConfigForm.vue";
 import Compartilhar from "@/components/admin/form/Compartilhar.vue";
+import Analitics from "@/components/admin/form/Analitic/Analitics.vue";
 
 const lista_questao = reactive([1, 2, 3, 4])
 const route = useRoute()
 const tab_select = ref('editor')
-const tipos_pergunta= reactive([
+const tipos_pergunta = reactive([
     'texto simples',
     'alternativas',
     'range'
@@ -27,28 +28,31 @@ function setTab(tab) {
         <template #content>
             <div class="flex justify-between">
                 <div>
-                    <Button variant="text" size="small" label="volvar" icon="pi pi-arrow-left"/>
+                    <Button icon="pi pi-arrow-left" label="volvar" size="small" variant="text"/>
                 </div>
                 <div class=" flex">
                     <Button :variant="tab_select === 'editor' ? 'outlined' : 'text'"
-                            aria-label="Filter" size="small"
-                            label="Editar" icon="pi pi-pencil"
+                            aria-label="Filter" icon="pi pi-pencil"
+                            label="Editar" size="small"
                             @click="setTab('editor')"
                     />
                     <Button :variant="tab_select === 'opcao' ? 'outlined' : 'text'"
-                            label="opcoes" icon="pi pi-trash" size="small"
+                            icon="pi pi-trash" label="opcoes" size="small"
                             @click="setTab('opcao')"/>
                     <Button :variant="tab_select === 'compartilhar' ? 'outlined' : 'text'"
-                            label="Compartilhar" icon="pi pi-times" size="small"
+                            icon="pi pi-times" label="Compartilhar" size="small"
                             @click="setTab('compartilhar')"/>
+                    <Button :variant="tab_select === 'analicts' ? 'outlined' : 'text'"
+                            icon="pi pi-chart-line" label="analytics" size="small"
+                            @click="setTab('analicts')"/>
                     <Button :variant="tab_select === 'respostas' ? 'outlined' : 'text'"
-                            label="respostas" icon="pi pi-times" size="small"
+                            icon="pi pi-times" label="respostas" size="small"
                             @click="setTab('respostas')"/>
                 </div>
                 <div>
                     <ButtonGroup>
-                        <Button variant="text" label="Ver" icon="pi pi-check"/>
-                        <Button variant="text" label="Publicar" icon="pi pi-trash"/>
+                        <Button icon="pi pi-check" label="Ver" variant="text"/>
+                        <Button icon="pi pi-trash" label="Publicar" variant="text"/>
                     </ButtonGroup>
                 </div>
             </div>
@@ -59,6 +63,7 @@ function setTab(tab) {
         <EditoForm v-if="tab_select === 'editor'"/>
         <ConfigForm v-if="tab_select === 'opcao'"/>
         <Compartilhar v-if="tab_select === 'compartilhar'"/>
+        <Analitics v-if="tab_select === 'analicts'"/>
     </div>
 </template>
 
