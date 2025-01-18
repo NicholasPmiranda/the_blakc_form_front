@@ -4,13 +4,14 @@ import {useRouter} from 'vue-router'
 import {Button, InputText} from "primevue";
 import {useUserStore} from "@/stores/UserStore.js";
 import { useToast } from "primevue/usetoast";
+import OpenLayout from "@/layouts/OpenLayout.vue";
 const toast = useToast();
+
 
 const userStore = useUserStore()
 const router = useRouter()
 const loading = ref(false)
 const errors = reactive({})
-
 const form = reactive({
     email: 'admin@admin.com',
     password: 'admin123'

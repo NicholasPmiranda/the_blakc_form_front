@@ -17,7 +17,6 @@ import Pixel from "@/components/rastreio/Pixel.vue";
 import Gtm from "@/components/rastreio/Gtm.vue";
 import Calendaly from "@/components/questionario/Calendaly.vue";
 
-
 const questionarioStore = useQuestionarioStore()
 const toast = useToast()
 const route = useRoute()

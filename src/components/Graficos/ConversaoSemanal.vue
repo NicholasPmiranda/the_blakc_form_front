@@ -7,25 +7,33 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Chart from 'primevue/chart'
-onMounted(() => {
+
+const chartData = ref();
+const chartOptions = ref();
+const dashStore = useDashStore()
+const route = useRoute()
+import {chartColor} from "@/extra/chartColor.js";
+import {useDashStore} from "@/stores/DashStore.js";
+import {useRoute} from "vue-router";
+
+
+
+onMounted(async () => {
+    await dashStore.getMediaConcluido(route.params.id)
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 });
 
-const chartData = ref();
-const chartOptions = ref();
-import {chartColor} from "@/extra/chartColor.js";
-const setChartData = () => {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const randomArray = Array.from({ length: 7 }, () => Math.floor(Math.random() * 101));
 
+const setChartData = () => {
     return {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: dashStore.mediaConcluido.label,
         datasets: [
             {
-                label: 'First Dataset',
-                data: randomArray,
+                label: 'Conversao',
+                data: dashStore.mediaConcluido.valor,
                 fill: false,
+                backgroundColor: chartColor[0],
                 borderColor: chartColor[0],
                 tension: 0.1
             },
@@ -42,9 +50,24 @@ const setChartOptions = () => {
     return {
         maintainAspectRatio: false,
         aspectRatio: 0.6,
+        interaction: {
+            mode: 'index',
+            intersect: false
+        },
         plugins: {
             legend: {
                 display:false
+            },
+            tooltip: {
+                callbacks: {
+                    title: function (context) {
+                        return 'Dia: ' + context[0].label;
+                    },
+                    label: function (context) {
+                        return context.dataset.label + ': ' + context.formattedValue+"%";
+                    },
+
+                },
             }
         },
         scales: {

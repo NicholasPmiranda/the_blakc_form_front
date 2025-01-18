@@ -1,40 +1,47 @@
 <template>
-    <div class="card">
-
-        <Chart type="line" :data="chartData" :options="chartOptions" class="h-[30rem]" />
+    <div class="flex items-center justify-center">
+        <Chart :data="chartData" :options="chartOptions" class="w-full" type="bar"/>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import {onMounted, ref} from "vue";
 import Chart from 'primevue/chart'
+import {useDashStore} from "@/stores/DashStore.js";
+import {useRoute} from "vue-router";
+import {chartColor} from "@/extra/chartColor.js";
+
 const dashStore = useDashStore()
 const route = useRoute()
+
 onMounted(async () => {
-     await dashStore.getHistoricoVizualizacaoSemanal(route.params.id)
+    await dashStore.getUtmSource(route.params.id)
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 });
 
 const chartData = ref();
 const chartOptions = ref();
-import {chartColor} from "@/extra/chartColor.js";
-import {useDashStore} from "@/stores/DashStore.js";
-import {useRoute} from "vue-router";
-const setChartData = () => {
-    return {
-        labels: dashStore.visualizacao_semanal.label,
-        datasets: [
-            {
-                label: 'vistas',
-                data: dashStore.visualizacao_semanal.valor,
-                fill: false,
-                backgroundColor: chartColor[0],
-                borderColor: chartColor[0],
-                tension: 0.1
-            },
 
-        ]
+const setChartData = () => {
+    var dataSets = []
+    console.log(dashStore.utm_source)
+    dashStore.utm_source.data_sets.forEach((data_set, index) => {
+        console.log(data_set)
+        dataSets.push(
+            {
+                label: data_set.label,
+                data: data_set.valores,
+                backgroundColor: chartColor[index],
+                borderColor: chartColor[index],
+                borderWidth: 1
+            }
+        )
+    })
+
+    return {
+        labels: dashStore.utm_source.labels,
+        datasets: dataSets
     };
 };
 const setChartOptions = () => {
@@ -44,15 +51,11 @@ const setChartOptions = () => {
     const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
 
     return {
-        maintainAspectRatio: false,
-        aspectRatio: 0.6,
-        interaction: {
-            mode: 'index',
-            intersect: false
-        },
         plugins: {
             legend: {
-                display:false
+                labels: {
+                    color: textColor
+                }
             }
         },
         scales: {
@@ -61,10 +64,13 @@ const setChartOptions = () => {
                     color: textColorSecondary
                 },
                 grid: {
+                    color: surfaceBorder
                 }
             },
             y: {
+                beginAtZero: true,
                 ticks: {
+                    color: textColorSecondary
                 },
                 grid: {
                     color: surfaceBorder

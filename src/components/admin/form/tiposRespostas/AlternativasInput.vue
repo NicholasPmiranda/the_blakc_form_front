@@ -63,7 +63,7 @@ watch(
 </script>
 
 <template>
-    <div class="border">
+    <div class="">
         <input  v-model="editFormStore.questao_select.titulo" @blur="editFormStore.updateTitulo" class="input-pergunta"/>
         <input  v-model="editFormStore.questao_select.descricao" @blur="editFormStore.updateDescricao"  class="input-descricao"/>
 

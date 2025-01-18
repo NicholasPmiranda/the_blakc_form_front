@@ -5,30 +5,27 @@ const router = createRouter({
     routes: [
         {
             path: '/login',
-            name: '',
             component: () => import('../layouts/OpenLayout.vue'),
             children: [
                 {
                     path: '',
                     name: 'login',
                     component: () => import('../views/login/Login.vue'),
-                },
-
-
-                {
-                    path: '/questionario/:id',
-                    name: 'login',
-                    component: () => import('../views/Questionario/Questionario.vue'),
-                },
-
-                // {
-                //     path: '/callendly',
-                //     name: 'login',
-                //     component: () => import('../views/integracoes/calendly.vue'),
-                // },
-
+                }
             ]
         },
+        {
+            path: '/questionario',
+            component: () => import('../layouts/OpenLayout.vue'),
+            children: [
+                {
+                    path: ':id',
+                    name: 'questionario',
+                    component: () => import('../views/Questionario/Questionario.vue'),
+                }
+            ]
+        },
+
 
         {
             path: '',

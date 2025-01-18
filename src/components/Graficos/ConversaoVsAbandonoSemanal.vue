@@ -1,42 +1,48 @@
 <template>
     <div class="card">
-        <Chart type="line" :data="chartData" :options="chartOptions" class="h-[30rem]" />
+        <Chart :data="chartData" :options="chartOptions" class="h-[30rem]" type="line"/>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import {onMounted, ref} from "vue";
 import Chart from 'primevue/chart'
-onMounted(() => {
+import {chartColor} from "@/extra/chartColor.js";
+import {useDashStore} from "@/stores/DashStore.js";
+
+onMounted(async () => {
+    await dashStore.getAbandonoConclusao(1)
+
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 });
 
 const chartData = ref();
 const chartOptions = ref();
-import {chartColor} from "@/extra/chartColor.js";
-const setChartData = () => {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const randomArray = Array.from({ length: 30 }, () => Math.floor(Math.random() * 101));
-    const abandono = Array.from({ length: 30 }, () => Math.floor(Math.random() * 101));
-    const dias = Array.from({ length: 30 }, (_, index) => index + 1);
 
+const dashStore = useDashStore()
+
+
+
+const setChartData = () => {
     return {
-        labels: dias,
+        labels: dashStore.abandonoConsusao.label,
         datasets: [
             {
                 label: 'Conversao',
-                data: randomArray,
+                data: dashStore.abandonoConsusao.concluido,
                 fill: false,
+                backgroundColor: chartColor[0],
                 borderColor: chartColor[0],
-                tension: 0.2
+                tension: 0.1,
             },
             {
                 label: 'Abandono',
-                data: abandono,
+                data: dashStore.abandonoConsusao.abandono,
                 fill: false,
-                borderColor: chartColor[1],
-                tension: 0.2
+                backgroundColor: chartColor[3],
+                borderColor: chartColor[3],
+                tension: 0.1,
             },
 
         ]
@@ -50,10 +56,32 @@ const setChartOptions = () => {
 
     return {
         maintainAspectRatio: false,
-        aspectRatio: 0.6,
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false
+        },
         plugins: {
             legend: {
-                // display:false
+                labels: {
+                    color: '#fff',
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    title: function (context) {
+                        return 'Dia: ' + context[0].label;
+                    },
+                    label: function (context) {
+                        return context.dataset.label + ': ' + context.formattedValue+"%";
+                    },
+
+                },
+            }
+        },
+        elements: {
+            line: {
+                borderWidth: 5
             }
         },
         scales: {
@@ -61,19 +89,14 @@ const setChartOptions = () => {
                 ticks: {
                     color: textColorSecondary
                 },
-                grid: {
-                    // color: surfaceBorder
-                }
             },
             y: {
-                ticks: {
-                    // color: textColorSecondary
-                },
                 grid: {
                     color: surfaceBorder
                 }
             }
         }
+
     };
 }
 </script>
