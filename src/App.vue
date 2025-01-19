@@ -18,6 +18,7 @@ console.log(
     </div>
     <div class="block sm:hidden">
         <div class="flex justify-center text-center items-center h-screen text-4xl b ">
+            teste novo
             Seu PC tá com saudades de você! Aproveita pra usar o editor nele!
         </div>
     </div>
