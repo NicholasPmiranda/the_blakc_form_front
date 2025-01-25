@@ -8,18 +8,20 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
         last_page: 1,
         total_itens: 1,
         page: 1,
-        per_page: 20
+        per_page: 20,
+        tabela:false
     }),
 
     actions: {
         async getResposta(form_id) {
 
             try {
-                const response = await Axios.get('api/teste', {
+                const response = await Axios.get('api/form/lista/respostas', {
                     params:{
                         form_id: form_id,
                         page: this.page,
-                        per_page: this.per_page
+                        per_page: this.per_page,
+                        tabela: this.tabela
                     }
                 });
                 const {cabecalho, respostas, last_page, total_itens} = response.data;

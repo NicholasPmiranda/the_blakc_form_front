@@ -5,6 +5,7 @@ import {useRoute} from "vue-router";
 import RespostaFormTabela from "@/components/admin/form/respostaForm/RespostaFormTabela.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
 import {ref} from "vue";
+import RespostaVisualizacaoForm from "@/components/admin/form/respostaForm/RespostaVisualizacaoForm.vue";
 
 const respostaStore = useRespostaFormStore()
 const route = useRoute()
@@ -21,9 +22,10 @@ respostaStore.getResposta(route.params.id)
             <div class="flex justify-center">
                 <div class="flex gap-2">
                     visualizar modo tabela
-                    <ToggleSwitch v-model="tabela"/></div>
+                    <ToggleSwitch v-model="respostaStore.tabela"/></div>
             </div>
-            <RespostaFormTabela class="mt-10" v-if="tabela"/>
+            <RespostaFormTabela class="mt-10" v-if="respostaStore.tabela  === true"/>
+            <RespostaVisualizacaoForm class="mt-10" v-if="respostaStore.tabela === false"/>
         </template>
     </Card>
 

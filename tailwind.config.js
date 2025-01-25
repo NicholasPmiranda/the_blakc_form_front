@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'dark-purple': '#1a142a', // Nome personalizado (ex.: "custom-dark")
+        'purple-default': '#7548DB', // Nome personalizado (ex.: "custom-dark")
+      },
+    },
   },
   plugins: [],
 }
