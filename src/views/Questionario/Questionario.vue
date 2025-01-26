@@ -77,7 +77,8 @@ async function carregarPixel() {
 onMounted(async () => {
     await questionarioStore.listarQuestoes(route.params.id)
     questionarioStore.form_id = route.params.id
-    // carregarPixel()
+    questionarioStore.addQueryParams(route.query)
+
 })
 </script>
 

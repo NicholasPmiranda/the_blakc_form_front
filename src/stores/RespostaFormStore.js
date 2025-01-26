@@ -14,6 +14,7 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
         completas: true,
         grupo_ativo: [],
         loading_paginate: false,
+        loading_ordenacao: false,
         ordernar: 'desc'
     }),
 
@@ -21,6 +22,7 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
         async getResposta(form_id) {
 
             try {
+                this.loading_ordenacao = true;
 
 
                 const response = await Axios.get('api/form/lista/respostas', {
@@ -46,8 +48,11 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
 
             } catch (error) {
                 console.error('Error during login:', error.response || error.message);
-                return false;
+                // return false;
             }
+
+            this.loading_ordenacao = false;
+
         },
 
         trocaVisualizacao() {

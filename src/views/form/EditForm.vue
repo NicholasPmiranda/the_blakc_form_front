@@ -6,13 +6,25 @@ import ConfigForm from "@/components/admin/form/ConfigForm.vue";
 import Compartilhar from "@/components/admin/form/Compartilhar.vue";
 import Analitics from "@/components/admin/form/Analitic/Analitics.vue";
 import RespostaForm from "@/components/admin/form/respostaForm/RespostaForm.vue";
+import {useRoute} from "vue-router";
+import {useToast} from "primevue/usetoast";
+import {useEditFormStore} from "@/stores/EditFormStore.js";
 
 
 const tab_select = ref('editor')
-
+const route = useRoute()
+const toast = useToast()
+const formStore = useEditFormStore()
 
 function setTab(tab) {
     tab_select.value = tab
+}
+
+
+async function publicar() {
+    await formStore.publicar(route.params.id)
+
+    toast.add({severity: 'success', summary: 'sucesso', detail: 'formulario publicado com sucesso', life: 3000});
 }
 
 </script>
@@ -22,7 +34,9 @@ function setTab(tab) {
         <template #content>
             <div class="flex justify-between">
                 <div>
-                    <Button icon="pi pi-arrow-left" label="volvar" size="small" variant="text"/>
+                    <router-link to="/">
+                        <Button icon="pi pi-arrow-left" label="volvar" size="small" variant="text"/>
+                    </router-link>
                 </div>
                 <div class=" flex">
                     <Button :variant="tab_select === 'editor' ? 'outlined' : 'text'"
@@ -45,8 +59,10 @@ function setTab(tab) {
                 </div>
                 <div>
                     <ButtonGroup>
-                        <Button icon="pi pi-check" label="Ver" variant="text"/>
-                        <Button icon="pi pi-trash" label="Publicar" variant="text"/>
+                        <router-link :to="`/questionario/${route.params.id}`">
+                            <Button icon="pi pi-check" label="Ver" variant="text"/>
+                        </router-link>
+                        <Button :loading="formStore.loading" icon="pi pi-trash" label="Publicar" variant="text" @click="publicar"/>
                     </ButtonGroup>
                 </div>
             </div>
@@ -58,7 +74,7 @@ function setTab(tab) {
         <ConfigForm v-if="tab_select === 'opcao'"/>
         <Compartilhar v-if="tab_select === 'compartilhar'"/>
         <Analitics v-if="tab_select === 'analicts'"/>
-        <RespostaForm  v-if="tab_select === 'respostas'"/>
+        <RespostaForm v-if="tab_select === 'respostas'"/>
     </div>
 </template>
 

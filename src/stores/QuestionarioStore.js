@@ -17,11 +17,16 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
         form_id: null,
         pixel: [],
         gtm: [],
+        query_params:[]
 
 
     }),
 
     actions: {
+
+        addQueryParams(query){
+            this.query_params = query
+        },
         async listarQuestoes(form_id) {
             const request = await Axios.get('/api/questionario', {
                 params: {
@@ -57,6 +62,18 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
                 user_id: this.user_id
             }
 
+            if(this.query_params.utm_source){
+                payload.utm_source = this.query_params.utm_source
+                console.log('utm_source')
+            }
+
+            if(this.query_params.utm_mediun){
+                payload.utm_mediun = this.query_params.utm_mediun
+                console.log('utm_mediun')
+
+            }
+
+            console.log(payload, this.query_params)
             await Axios.post('/api/questionario', payload)
             if (this.pergunta_index === this.lista_questao.length) {
                 return 'finalizado'

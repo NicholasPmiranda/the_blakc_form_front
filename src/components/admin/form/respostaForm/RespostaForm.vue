@@ -58,6 +58,7 @@ const options = ref([
                                 :options="options"
                                 option-label="text"
                                 option-value="value"
+                                :loading="respostaStore.loading_ordenacao"
                                 @change="respostaStore.getResposta(route.params.id)"
                         />
                     </FloatLabel>

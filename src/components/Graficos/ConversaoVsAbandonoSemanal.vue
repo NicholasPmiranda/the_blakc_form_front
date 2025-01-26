@@ -9,9 +9,12 @@ import {onMounted, ref} from "vue";
 import Chart from 'primevue/chart'
 import {chartColor} from "@/extra/chartColor.js";
 import {useDashStore} from "@/stores/DashStore.js";
+import {useRoute} from "vue-router";
 
+
+const route = useRoute()
 onMounted(async () => {
-    await dashStore.getAbandonoConclusao(1)
+    await dashStore.getAbandonoConclusao(route.params.id)
 
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();

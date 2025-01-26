@@ -20,6 +20,14 @@ export const useEditFormStore = defineStore('editFormStore', {
     }),
 
     actions: {
+        async publicar(form_id) {
+            this.loading = true
+            await Axios.post('/api/form/publicar/' + form_id)
+
+            this.loading = false
+            return true
+        },
+
         async listarQuestoes(form_id) {
             this.loading = true
             const request = await Axios.get('/api/questoes', {
