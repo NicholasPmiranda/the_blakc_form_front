@@ -1,6 +1,6 @@
 <script setup>
-import {Badge, Button, Card, Drawer, Select, ToggleSwitch, ConfirmDialog} from "primevue";
-import {onMounted, reactive, ref, watch} from "vue";
+import {Badge, Button, Card, Drawer, Select, ToggleSwitch} from "primevue";
+import {reactive, ref} from "vue";
 import TextoSimplesInput from "@/components/admin/form/tiposRespostas/TextoSimplesInput.vue";
 import AlternativasInput from "@/components/admin/form/tiposRespostas/AlternativasInput.vue";
 import EmailInput from "@/components/admin/form/tiposRespostas/EmailInput.vue";
@@ -96,21 +96,22 @@ function openConfig(element) {
 
             <template #content class=" ">
                 <div class="flex justify-center">
-                    <Button size="small" icon="pi pi-plus" label="Adicionar questao"
+                    <Button icon="pi pi-plus" label="Adicionar questao" size="small"
+                            :loading="editFormStore.loading"
                             @click="editFormStore.salvarQuestao(route.params.id)"/>
                 </div>
                 <draggable
                     v-model="editFormStore.lista_questao"
-                    @start="drag=true"
+                    item-key="order"
                     @end="drag=false"
-                    @update="editFormStore.updateOrder"
-                    item-key="order">
+                    @start="drag=true"
+                    @update="editFormStore.updateOrder">
                     <template #item="{element, index}">
                         <div class="flex justify-between   items-center   py-3 mt-3 hover-componente "
                              @click="editFormStore.setSelectQuestao(element)">
                             <div class="flex justify-start   gap-2">
                                 <div class=" w-5 flex items-center justify-center ">
-                                    <Button size="small" variant="text" icon="pi pi-arrows-v"/>
+                                    <Button icon="pi pi-arrows-v" size="small" variant="text"/>
                                 </div>
                                 <div class="flex w-1 items-center">
                                     {{ index + 1 }}
@@ -118,23 +119,21 @@ function openConfig(element) {
                                 <div class="card-titulo">
                                     <div>
                                         <p> {{ element.titulo }}</p>
-                                        <Badge size="small" :severity="getSeverity(element.tipo)"
-                                               :value="element.tipo"></Badge>
+                                        <Badge :severity="getSeverity(element.tipo)" :value="element.tipo"
+                                               size="small"></Badge>
                                     </div>
                                 </div>
                             </div>
                             <div class="    justify-end ">
-                                <div class="flex justify-end " v-if="element.id === editFormStore.questao_select.id">
-                                    <Button variant="text" @click="deleteQuestao(element, index)" size="small"
-                                            icon="pi pi-trash"/>
-                                    <Button variant="text" size="small" @click="openConfig(element)" icon="pi pi-cog"/>
+                                <div v-if="element.id === editFormStore.questao_select.id" class="flex justify-end ">
+                                    <Button icon="pi pi-trash" size="small" variant="text"
+                                            @click="deleteQuestao(element, index)"/>
+                                    <Button icon="pi pi-cog" size="small" variant="text" @click="openConfig(element)"/>
                                 </div>
                             </div>
                         </div>
                     </template>
                 </draggable>
-
-
             </template>
         </Card>
     </div>
@@ -145,15 +144,15 @@ function openConfig(element) {
                 <div class="flex justify-between items-center">
                     <div>
                         <Select
-                            @change="editFormStore.updateTipo()"
-                            :options="tipos_pergunta"
                             v-model="editFormStore.questao_select.tipo"
+                            :options="tipos_pergunta"
+                            @change="editFormStore.updateTipo()"
                         />
                     </div>
                     <div>
                           <span class="flex items-center gap-2">
-                                <ToggleSwitch @change="updateObrigatorio"
-                                              v-model="editFormStore.questao_select.obrigatorio"/>
+                                <ToggleSwitch v-model="editFormStore.questao_select.obrigatorio"
+                                              @change="updateObrigatorio"/>
                                 Obrigatório
                           </span>
                     </div>
@@ -172,8 +171,8 @@ function openConfig(element) {
         </Card>
     </div>
 
-    <Drawer v-model:visible="visibleConfig" header="Configuracao questao"
-            class="!w-full md:!w-80 lg:!w-[40rem]"
+    <Drawer v-model:visible="visibleConfig" class="!w-full md:!w-80 lg:!w-[40rem]"
+            header="Configuracao questao"
             position="right">
 
         <RegrasRespostas/>

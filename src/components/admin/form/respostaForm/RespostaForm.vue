@@ -1,17 +1,33 @@
 <script setup>
-import {Card,} from "primevue";
+import {Card, FloatLabel, Select} from "primevue";
 import {useRespostaFormStore} from "@/stores/RespostaFormStore.js";
 import {useRoute} from "vue-router";
 import RespostaFormTabela from "@/components/admin/form/respostaForm/RespostaFormTabela.vue";
 import ToggleSwitch from 'primevue/toggleswitch';
-import {ref} from "vue";
 import RespostaVisualizacaoForm from "@/components/admin/form/respostaForm/RespostaVisualizacaoForm.vue";
+import {ref} from "vue";
 
 const respostaStore = useRespostaFormStore()
 const route = useRoute()
-const tabela = ref(true)
 
-respostaStore.getResposta(route.params.id)
+const options = ref([
+    {
+        value: 'desc',
+        text: 'mais recentes'
+    },
+    {
+        value: 'asc',
+        text: 'mais antigas'
+    },
+    {
+        value: 'incopletas_crescente',
+        text: 'incopletas crescente'
+    },
+    {
+        value: 'completas',
+        text: 'completas'
+    },
+])
 
 
 </script>
@@ -19,13 +35,37 @@ respostaStore.getResposta(route.params.id)
 <template>
     <Card class="w-full">
         <template #content>
-            <div class="flex justify-center">
-                <div class="flex gap-2">
+            <div class="flex mt-4  justify-end">
+                <div class="flex gap-2 ">
                     visualizar modo tabela
-                    <ToggleSwitch v-model="respostaStore.tabela"/></div>
+                    <ToggleSwitch v-model="respostaStore.tabela" @change="respostaStore.trocaVisualizacao()"/>
+
+                </div>
             </div>
-            <RespostaFormTabela class="mt-10" v-if="respostaStore.tabela  === true"/>
-            <RespostaVisualizacaoForm class="mt-10" v-if="respostaStore.tabela === false"/>
+            <div class="flex mt-4  justify-end">
+                <div class="flex gap-2">
+                    Somente respostas completas
+                    <ToggleSwitch v-model="respostaStore.completas"
+                                  @change="respostaStore.getResposta(route.params.id)"/>
+                </div>
+            </div>
+
+            <div class="flex mt-8  justify-end">
+                <div class="flex gap-2">
+                    <FloatLabel>
+                        <label >Ordernar</label>
+                        <Select  v-model="respostaStore.ordernar"
+                                :options="options"
+                                option-label="text"
+                                option-value="value"
+                                @change="respostaStore.getResposta(route.params.id)"
+                        />
+                    </FloatLabel>
+
+                </div>
+            </div>
+            <RespostaFormTabela v-if="respostaStore.tabela  === true" class="mt-10"/>
+            <RespostaVisualizacaoForm v-else class="mt-10"/>
         </template>
     </Card>
 

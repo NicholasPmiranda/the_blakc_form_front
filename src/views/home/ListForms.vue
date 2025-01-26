@@ -25,11 +25,13 @@ const mainItems = ref([
     }
 ]);
 
-
+const  form_load = ref(false)
 async function createForm() {
-    visible.value = false;
+    form_load.value = true
     await homeStore.cadastrarForm(form_name.value)
     toast.add({severity: 'success', detail: 'Form cadastrado com sucesso'})
+    visible.value = false;
+    form_load.value = false;
 }
 </script>
 
@@ -96,7 +98,7 @@ async function createForm() {
 
         <div class="flex justify-end gap-2">
             <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-            <Button type="button" label="Save" @click="createForm"></Button>
+            <Button type="button" :loading="form_load" label="Save" @click="createForm"></Button>
         </div>
     </Dialog>
 </template>

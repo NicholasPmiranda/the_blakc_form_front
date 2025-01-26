@@ -102,6 +102,7 @@ function deleteRegra(regra, index) {
                 size="small"
                 aria-label="Save"
                 @click="addRegra"
+                :loading="editFormStore.loading"
         />
     </div>
 

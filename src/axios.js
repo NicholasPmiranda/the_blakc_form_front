@@ -1,18 +1,29 @@
 import axios from "axios";
 import router from "@/router";
 
-axios.defaults.baseURL = "https://api.minimalform.com.br/";
-axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+const Axios = axios.create({
+    baseURL: import.meta.env.VITE_BASE_URL,
+});
 
-axios.interceptors.response.use(
-    response => response,
-    error => {
+// Interceptor para adicionar o token dinamicamente a cada requisição
+Axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+// Interceptor para tratar erros 401
+Axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
         if (error.response && error.response.status === 401) {
-            router.push('/login');
+            localStorage.removeItem("token"); // Opcional: remove token inválido
+            router.push("/login");
         }
         return Promise.reject(error);
     }
 );
 
-
-export const Axios = axios;
+export { Axios };

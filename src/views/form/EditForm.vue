@@ -1,22 +1,15 @@
 <script setup>
-import {useRoute} from "vue-router";
 import {Button, ButtonGroup, Card} from "primevue";
-import {reactive, ref} from "vue";
+import {ref} from "vue";
 import EditoForm from "@/components/admin/form/EditorForm.vue";
 import ConfigForm from "@/components/admin/form/ConfigForm.vue";
 import Compartilhar from "@/components/admin/form/Compartilhar.vue";
 import Analitics from "@/components/admin/form/Analitic/Analitics.vue";
 import RespostaForm from "@/components/admin/form/respostaForm/RespostaForm.vue";
 
-const lista_questao = reactive([1, 2, 3, 4])
-const route = useRoute()
+
 const tab_select = ref('editor')
-const tipos_pergunta = reactive([
-    'texto simples',
-    'alternativas',
-    'range'
-])
-const tipo_select = ref('texto simples')
+
 
 function setTab(tab) {
     tab_select.value = tab
