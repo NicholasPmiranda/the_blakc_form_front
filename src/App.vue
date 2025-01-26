@@ -11,16 +11,12 @@ console.log(
 </script>
 
 <template>
-    <div class="hidden sm:block">
+    <div class="">
         <Toast/>
         <ConfirmDialog/>
         <RouterView/>
     </div>
-    <div class="block sm:hidden">
-        <div class="flex justify-center text-center items-center h-screen text-4xl b ">
-            Seu PC tá com saudades de você! Aproveita pra usar o editor nele!
-        </div>
-    </div>
+
 
 </template>
 
