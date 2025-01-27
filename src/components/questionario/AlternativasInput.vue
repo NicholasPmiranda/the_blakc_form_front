@@ -8,9 +8,9 @@ const questionario = useQuestionarioStore()
 </script>
 
 <template>
-    <div>
-        <input v-model="questionario.questao_select.titulo" class="input-pergunta" readonly/>
-        <input v-model="questionario.questao_select.descricao" class="input-descricao" readonly/>
+    <div class="">
+        <p class="input-pergunta ">{{ questionario.questao_select.titulo }}</p>
+        <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
         <div class="mt-4">
             <div class="flex items-center" v-for="alternativa in questionario.questao_select.alternativas">

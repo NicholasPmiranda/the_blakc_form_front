@@ -26,11 +26,9 @@ onMounted(() => {
 
 <template>
     <div>
-        <input v-model="questionarioStore.questao_select.titulo" class="input-pergunta"
-               readonly/>
+        <p class="input-pergunta text-center">{{ questionario.questao_select.titulo }}</p>
+        <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
-        <input v-model="questionarioStore.questao_select.descricao" class="input-descricao"
-               readonly/>
         <div class="mt-20">
             <div @click="teste"
                 class="calendly-inline-widget"

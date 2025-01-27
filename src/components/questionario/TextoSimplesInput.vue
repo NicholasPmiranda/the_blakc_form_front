@@ -7,10 +7,9 @@ const questionario = useQuestionarioStore()
 
 <template>
     <div>
-        <input v-model="questionario.questao_select.titulo" class="input-pergunta"
-               readonly/>
-        <input v-model="questionario.questao_select.descricao" class="input-descricao"
-               readonly/>
+        <p class="input-pergunta ">{{ questionario.questao_select.titulo }}</p>
+        <p class="input-descricao ">{{ questionario.questao_select.descricao }}</p>
+
 
         <textarea v-model="questionario.resposta" class="input-text-area">Uma resposta simples</textarea>
     </div>
@@ -69,4 +68,27 @@ const questionario = useQuestionarioStore()
 .input-descricao:hover {
     background-color: #1a142a;
 }
+
+@media screen and (max-width: 425px) {
+    .input-text-area{
+        width: 350px;
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+    .input-text-area{
+        width: 300px;
+    }
+
+}
+
+@media screen and (max-width: 320px) {
+    .input-text-area{
+        width: 250px;
+    }
+
+}
+
+
 </style>

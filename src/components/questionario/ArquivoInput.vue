@@ -1,19 +1,30 @@
 <script setup>
-import {useEditFormStore} from "@/stores/EditFormStore.js";
+import {useQuestionarioStore} from "@/stores/QuestionarioStore.js";
 
-const ediFormStore = useEditFormStore()
+const questionario = useQuestionarioStore()
 
+const handleFileUpload = (event) => {
+    const files = Array.from(event.target.files);
+    // Armazena os arquivos na store
+    questionario.questao_select.arquivosSelecionados = files;
+
+    // Se precisar de acesso imediato aos arquivos:
+    questionario.resposta = 'arquivo'
+    questionario.file = files[0]
+    // Ou se preferir armazenar apenas os primeiros arquivos:
+    // questionario.questao_select.arquivoSelecionado = files[0]; // Para single file
+};
 </script>
 
 <template>
     <div>
-        <input v-model="ediFormStore.questao_select.titulo" class="input-pergunta" readonly
-               value="qual sua pergunta ?"/>
-        <input v-model="ediFormStore.questao_select.descricao" class="input-descricao"
-               readonly
-               value="Sua opinião é muito importante pra gente."/>
+        <p class="input-pergunta text-center">{{ questionario.questao_select.titulo }}</p>
+        <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
-        <input class="input-text-area" type="file"/>
+        <input class="input-text-area" type="file"
+               @change="handleFileUpload"
+
+        />
     </div>
 </template>
 

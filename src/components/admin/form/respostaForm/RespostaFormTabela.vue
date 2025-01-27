@@ -2,7 +2,7 @@
 import {computed} from 'vue';
 import {useRespostaFormStore} from "@/stores/RespostaFormStore.js";
 import {useRoute} from "vue-router";
-import {Column, DataTable, Paginator} from "primevue";
+import {Column,Button, DataTable, Paginator} from "primevue";
 
 const respostaStore = useRespostaFormStore();
 const route = useRoute();
@@ -59,14 +59,10 @@ function onSortChange(event) {
                 :sortable="true"
             >
                 <template #body="{ data }">
-                    <div v-if="data[`${cabecalho}_type`] === 'arquivo'">
-                        <a
-                            :href="data[cabecalho]"
-                            class="p-button p-component p-button-icon-only"
-                            download
-                        >
-                            <i class="pi pi-download"></i>
-                        </a>
+                    <div v-if="data[`${cabecalho}_type`] === true">
+
+                        <Button size="small" icon="pi pi-download" as="a" label="Download" :href="data[cabecalho]" target="_blank"  />
+
                     </div>
                     <span v-else>
                         {{ data[cabecalho] }}

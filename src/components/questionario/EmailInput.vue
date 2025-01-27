@@ -8,10 +8,8 @@ const ediFormStore = useEditFormStore()
 
 <template>
     <div>
-        <input readonly v-model="ediFormStore.questao_select.titulo"
-                 class="input-pergunta"/>
-        <input readonly v-model="ediFormStore.questao_select.descricao"
-                  class="input-descricao"/>
+        <p class="input-pergunta text-center">{{ questionario.questao_select.titulo }}</p>
+        <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
         <input class="input-text-area" value="email@email.com" type="email">
     </div>

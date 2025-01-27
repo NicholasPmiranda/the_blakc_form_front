@@ -10,11 +10,8 @@ const questionarioStore = useQuestionarioStore();
 
 <template>
     <div>
-        <input v-model="questionarioStore.questao_select.titulo" class="input-pergunta"
-               readonly/>
-
-        <input v-model="questionarioStore.questao_select.descricao" class="input-descricao"
-               readonly/>
+        <p class="input-pergunta text-center">{{ questionario.questao_select.titulo }}</p>
+        <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
         <div class="mt-20">
             <DatePicker v-if="questionarioStore.questao_select.config.tipo_calendario === 'data simples'"
                         v-model="questionarioStore.resposta"

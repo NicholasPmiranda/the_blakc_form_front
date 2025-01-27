@@ -17,14 +17,15 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
         form_id: null,
         pixel: [],
         gtm: [],
-        query_params:[]
+        query_params: [],
+        file: null
 
 
     }),
 
     actions: {
 
-        addQueryParams(query){
+        addQueryParams(query) {
             this.query_params = query
         },
         async listarQuestoes(form_id) {
@@ -54,27 +55,34 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             }
 
 
-            const payload = {
-                form_id: this.form_id,
-                questao: this.questao_select.titulo,
-                questao_id: this.questao_select.id,
-                resposta: this.resposta,
-                user_id: this.user_id
+            const formData = new FormData();
+
+            formData.append('form_id', this.form_id);
+            formData.append('questao', this.questao_select.titulo);
+            formData.append('questao_id', this.questao_select.id);
+            formData.append('resposta', this.resposta);
+            formData.append('user_id', this.user_id);
+
+            if (this.file != null) {
+                formData.append(`arquivo`, this.file);
             }
 
-            if(this.query_params.utm_source){
-                payload.utm_source = this.query_params.utm_source
-                console.log('utm_source')
+            if (this.query_params.utm_source) {
+                formData.append('utm_source', this.query_params.utm_source);
+            }
+            if (this.query_params.utm_mediun) {
+                formData.append('utm_mediun', this.query_params.utm_mediun);
             }
 
-            if(this.query_params.utm_mediun){
-                payload.utm_mediun = this.query_params.utm_mediun
-                console.log('utm_mediun')
+            try {
+                console.log('fazendo')
+                await Axios.post('/api/questionario', formData)
+                console.log('feito')
 
+            } catch (error) {
+                console.log(error)
             }
 
-            console.log(payload, this.query_params)
-            await Axios.post('/api/questionario', payload)
             if (this.pergunta_index === this.lista_questao.length) {
                 return 'finalizado'
             }
@@ -97,7 +105,6 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             this.questao_select = this.lista_questao[this.pergunta_index]
 
             this.resposta = ''
-
         }
 
     },
