@@ -22,6 +22,11 @@ Axios.interceptors.response.use(
             localStorage.removeItem("token"); // Opcional: remove token inválido
             router.push("/login");
         }
+
+        if (error.response && error.response.status === 402) {
+            localStorage.removeItem("token"); // Opcional: remove token inválido
+            router.push("/assinatura");
+        }
         return Promise.reject(error);
     }
 );
