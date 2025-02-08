@@ -21,14 +21,14 @@ import Utms from "@/components/admin/form/config/Utms.vue";
                     </AccordionContent>
                 </AccordionPanel>
 
-                <AccordionPanel value="2">
-                    <AccordionHeader>
-                        <Button label="Integracoes" variant="text" />
-                    </AccordionHeader>
-                    <AccordionContent>
-                            <Integracoes/>
-                    </AccordionContent>
-                </AccordionPanel>
+<!--                <AccordionPanel value="2">-->
+<!--                    <AccordionHeader>-->
+<!--                        <Button label="Integracoes" variant="text" />-->
+<!--                    </AccordionHeader>-->
+<!--                    <AccordionContent>-->
+<!--                            <Integracoes/>-->
+<!--                    </AccordionContent>-->
+<!--                </AccordionPanel>-->
                 <AccordionPanel value="3">
                     <AccordionHeader>
                         <Button label="Rastreios" variant="text" />

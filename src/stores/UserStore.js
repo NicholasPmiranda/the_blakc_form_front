@@ -31,6 +31,13 @@ export const useUserStore = defineStore('userStore', {
             const request = await Axios('/api/profile')
 
             this.user = request.data
+        },
+
+        async getAssinatura() {
+            const request = await Axios('/api/subscribe')
+
+
+            window.open(request.data, '_blank');
         }
     },
 })

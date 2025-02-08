@@ -15,6 +15,8 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
         grupo_ativo: [],
         loading_paginate: false,
         loading_ordenacao: false,
+        loading_pdf: false,
+        loading_Planilha: false,
         ordernar: 'desc'
     }),
 
@@ -75,7 +77,7 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
                     per_page: this.per_page,
                     tabela: this.tabela,
                     completas: this.completas,
-                    order: this.ordenar
+                    order: this.ordernar
                 }
             });
 
@@ -84,7 +86,51 @@ export const useRespostaFormStore = defineStore('respostaFormStore', {
 
             this.respostas = [...this.respostas, ...respostas]
             this.loading_paginate = false
-        }
+        },
+
+        async getDowloadPDf(form_id) {
+            this.loading_pdf = true
+            this.page = this.page + 1
+
+            const response = await Axios.get('api/form/reatorio/pdf', {
+                responseType: 'blob',
+                params: {
+                    form_id: form_id,
+                    user_id: this.grupo_ativo[0].user_id,
+                }
+            });
+
+
+            return response
+        },
+        async getDowloadPlanilha(form_id) {
+            this.loading_Planilha = true
+            this.page = this.page + 1
+
+            console.log({
+                form_id: form_id,
+                page: this.page,
+                per_page: this.per_page,
+                tabela: this.tabela,
+                completas: this.completas,
+                order: this.ordernar
+            })
+            const response = await Axios.get('api/form/reatorio/excel', {
+                responseType: 'blob',
+                params: {
+                    form_id: form_id,
+                    page: this.page,
+                    per_page: this.per_page,
+                    tabela: this.tabela,
+                    completas: this.completas,
+                    order: this.ordernar
+                }
+            });
+
+
+            return response
+        },
+
 
 
     },

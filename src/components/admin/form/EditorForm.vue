@@ -172,7 +172,7 @@ function openConfig(element) {
     </div>
 
     <Drawer v-model:visible="visibleConfig" class="!w-full md:!w-80 lg:!w-[40rem]"
-            header="Configuracao questao"
+            header=" Configuração questão"
             position="right">
 
         <RegrasRespostas/>

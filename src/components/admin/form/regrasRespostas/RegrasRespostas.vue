@@ -1,6 +1,6 @@
 <script setup>
-import {FloatLabel, Select, Button,InputText} from "primevue";
-import {ref, watch} from "vue";
+import {Button, FloatLabel, InputText, Select} from "primevue";
+import {ref} from "vue";
 import {useEditFormStore} from "@/stores/EditFormStore.js";
 import {useToast} from "primevue/usetoast";
 import {useConfirm} from "primevue/useconfirm";
@@ -25,6 +25,12 @@ async function addRegra() {
             life: 3000
         });
     }
+}
+
+async function addRedirect() {
+    await editFormStore.updateConfig()
+
+    toast.add({severity: 'success', summary: 'sucesso', detail: 'Redirect salva com sucesso', life: 3000});
 }
 
 async function update() {
@@ -60,87 +66,114 @@ function deleteRegra(regra, index) {
 </script>
 
 <template>
-    <h1>Regras Respostas</h1>
-    <p>
-        Crie uma regra para que, quando a resposta selecionada for escolhida,
-        ele redirecione para uma questão diferente, sem ser a próxima.
-    </p>
-
-    <div class="mt-8 flex justify-center items-end   gap-3 w-full">
-        <FloatLabel class="w-1/2  mt-8" v-if="editFormStore.questao_select.tipo === 'alternativas'">
-            <Select inputId="over_label"
-                    :options="editFormStore.questao_select.alternativas"
-                    v-model="editFormStore.regra_resposta.resposta"
-                    filter
-                    optionLabel="name"
-                    optionValue="name"
-                    class="w-full"
+    <div>
+        <h1>Rediricionar</h1>
+        <p>
+            Mande o usuário para outra página fora do formulário, caso deseje.
+            Recomendamos ativar isso somente na última resposta, pois isso pode atrapalhar
+            o fluxo de resposta do usuário.
+        </p>
+        <div class="flex items-center mt-8 gap-5 w-full">
+            <FloatLabel class="w-full  ">
+                <InputText v-model="editFormStore.questao_select.config.redirect"
+                           class="w-full"
+                           inputId="over_label"
+                />
+                <label for="over_label">Link Externo</label>
+            </FloatLabel>
+            <Button :loading="editFormStore.loading"
+                    aria-label="Save"
+                    class="h-10"
+                    icon="pi pi-save"
+                    size="small"
+                    @click="addRedirect"
             />
-            <label for="over_label">Resposta</label>
-        </FloatLabel>
-        <FloatLabel class="w-1/2  mt-8" v-else>
-            <InputText inputId="over_label"
-                    v-model="editFormStore.regra_resposta.resposta"
-                    class="w-full"
-            />
-            <label for="over_label">Resposta</label>
-        </FloatLabel>
-        <FloatLabel class="w-1/2  mt-8">
-            <Select inputId="over_label"
-                    :options="editFormStore.lista_questao"
-                    v-model="editFormStore.regra_resposta.pergunta"
-                    filter
-                    optionLabel="titulo"
-                    optionValue="id"
-                    class="w-full"
-
-            />
-            <label for="over_label">Pergunta</label>
-        </FloatLabel>
-        <Button icon="pi pi-save"
-                class="h-10"
-                size="small"
-                aria-label="Save"
-                @click="addRegra"
-                :loading="editFormStore.loading"
-        />
+        </div>
     </div>
 
 
-    <div class=" mt-10">
-        <h1>Lista Regras</h1>
-
-        <div class="flex justify-center items-end gap-3 w-full"
-             v-for="(regra, index) in editFormStore.questao_select.config.regras_resposta"
-        >
-            <FloatLabel class="w-1/2  mt-8">
-                <Select inputId="over_label"
+    <div class="mt-10">
+        <h1>Regras Respostas</h1>
+        <p>
+            Crie uma regra para que, quando a resposta selecionada for escolhida,
+            ela redirecione para uma questão diferente, sem ser a próxima.
+        </p>
+        <div class="mt-8 flex justify-center items-end   gap-3 w-full">
+            <FloatLabel v-if="editFormStore.questao_select.tipo === 'alternativas'" class="w-1/2  mt-8">
+                <Select v-model="editFormStore.regra_resposta.resposta"
                         :options="editFormStore.questao_select.alternativas"
-                        @change="update"
-                        v-model="regra.resposta"
+                        class="w-full"
                         filter
+                        inputId="over_label"
                         optionLabel="name"
                         optionValue="name"
-                        class="w-full"
+                />
+                <label for="over_label">Resposta</label>
+            </FloatLabel>
+            <FloatLabel v-else class="w-1/2  mt-8">
+                <InputText v-model="editFormStore.regra_resposta.resposta"
+                           class="w-full"
+                           inputId="over_label"
                 />
                 <label for="over_label">Resposta</label>
             </FloatLabel>
             <FloatLabel class="w-1/2  mt-8">
-                <Select inputId="over_label"
+                <Select v-model="editFormStore.regra_resposta.pergunta"
                         :options="editFormStore.lista_questao"
-                        @change="update"
-                        v-model="regra.pergunta"
+                        class="w-full"
                         filter
+                        inputId="over_label"
                         optionLabel="titulo"
                         optionValue="id"
-                        class="w-full"
 
                 />
                 <label for="over_label">Pergunta</label>
             </FloatLabel>
-            <Button variant="text" size="small" @click="deleteRegra(regra, index)" severity="danger"
-                    icon="pi pi-trash"/>
+            <Button :loading="editFormStore.loading"
+                    aria-label="Save"
+                    class="h-10"
+                    icon="pi pi-save"
+                    size="small"
+                    @click="addRegra"
+            />
+        </div>
 
+
+        <div class=" mt-10">
+            <h1>Lista Regras</h1>
+
+            <div v-for="(regra, index) in editFormStore.questao_select.config.regras_resposta"
+                 class="flex justify-center items-end gap-3 w-full"
+            >
+                <FloatLabel class="w-1/2  mt-8">
+                    <Select v-model="regra.resposta"
+                            :options="editFormStore.questao_select.alternativas"
+                            class="w-full"
+                            filter
+                            inputId="over_label"
+                            optionLabel="name"
+                            optionValue="name"
+                            @change="update"
+                    />
+                    <label for="over_label">Resposta</label>
+                </FloatLabel>
+                <FloatLabel class="w-1/2  mt-8">
+                    <Select v-model="regra.pergunta"
+                            :options="editFormStore.lista_questao"
+                            class="w-full"
+                            filter
+                            inputId="over_label"
+                            optionLabel="titulo"
+                            optionValue="id"
+                            @change="update"
+
+                    />
+                    <label for="over_label">Pergunta</label>
+                </FloatLabel>
+                <Button icon="pi pi-trash" severity="danger" size="small" variant="text"
+                        @click="deleteRegra(regra, index)"/>
+
+            </div>
         </div>
     </div>
 

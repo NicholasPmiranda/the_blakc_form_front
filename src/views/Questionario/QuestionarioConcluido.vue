@@ -1,54 +1,19 @@
 <script setup>
-import {Button, Card} from "primevue";
-import TextoSimplesInput from "@/components/questionario/TextoSimplesInput.vue";
-import AlternativasInput from "@/components/questionario/AlternativasInput.vue";
-import EmailInput from "@/components/questionario/EmailInput.vue";
+import {Card} from "primevue";
+import {useRoute} from "vue-router";
 
-import {useRoute, useRouter} from "vue-router";
 
-import ArquivoInput from "@/components/questionario/ArquivoInput.vue";
-import RangeInput from "@/components/questionario/RangeInput.vue";
-
-import Calendario from "@/components/questionario/Calendario.vue";
 import {useQuestionarioStore} from "@/stores/QuestionarioStore.js";
 import {useToast} from "primevue/usetoast";
 import {onMounted} from "vue";
 import Pixel from "@/components/rastreio/Pixel.vue";
 import Gtm from "@/components/rastreio/Gtm.vue";
-import Calendaly from "@/components/questionario/Calendaly.vue";
 
 const questionarioStore = useQuestionarioStore()
-const toast = useToast()
 const route = useRoute()
-const router = useRouter()
 
 
-async function proximo() {
-    if (questionarioStore.questao_select.obrigatorio === true) {
-        if (questionarioStore.resposta === '') {
-            return toast.add({severity: 'error', summary: 'Erro', detail: 'Pergunta obrigatoria', life: 3000});
-        }
-    }
 
-    var resposta = await questionarioStore.proximoQuestao()
-
-    if (resposta === 'finalizado') {
-        toast.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'formulario finalizado com sucesso',
-            life: 3000
-        });
-
-        router.push(`/questionario/${route.params.id}/concluido`)
-    }
-
-
-    console.log(resposta)
-    if (resposta.includes("https")) {
-        window.open(resposta, "_blank");
-    }
-}
 
 async function carregarPixel() {
     questionarioStore.pixel.forEach((pixel) => {
@@ -82,6 +47,7 @@ async function carregarPixel() {
 }
 
 
+
 onMounted(async () => {
     await questionarioStore.listarQuestoes(route.params.id)
     questionarioStore.form_id = route.params.id
@@ -96,20 +62,13 @@ onMounted(async () => {
     <div class="w-full h-screen  flex items-center ">
         <Card class="w-full">
             <template #content>
-                <div class="h-screen-minus-165 flex justify-center items-center">
-                    <TextoSimplesInput v-if="questionarioStore.questao_select.tipo === 'texto_simples' "/>
-                    <EmailInput v-if="questionarioStore.questao_select.tipo === 'email'"/>
-                    <AlternativasInput v-if="questionarioStore.questao_select.tipo === 'alternativas' "/>
-                    <ArquivoInput v-if="questionarioStore.questao_select.tipo === 'arquivo' "/>
-                    <RangeInput v-if="questionarioStore.questao_select.tipo === 'range' "/>
-                    <Calendario v-if="questionarioStore.questao_select.tipo === 'data' "/>
-                    <Calendaly v-if="questionarioStore.questao_select.tipo === 'calendaly'"/>
+                <div class="h-screen-minus-165 text-center flex justify-center items-center">
+                    <div>
+                        <i class="pi pi-heart" style="font-size: 3rem"></i>
+                        <p class="text-xl">Valeu por ter tirado um tempinho para preencher o formulário! Sua participação é muito importante para nós. </p>
+                    </div>
 
                 </div>
-                <div class="flex justify-end">
-                    <Button @click="proximo"> Proximo</Button>
-                </div>
-
             </template>
         </Card>
     </div>

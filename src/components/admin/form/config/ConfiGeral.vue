@@ -1,5 +1,6 @@
 <script setup>
 import {FloatLabel, InputText} from "primevue";
+import Pdf from "@/components/Pdf.vue";
 </script>
 
 <template class="fle">
@@ -13,7 +14,6 @@ import {FloatLabel, InputText} from "primevue";
             </div>
         </div>
     </div>
-
 </template>
 
 <style scoped>

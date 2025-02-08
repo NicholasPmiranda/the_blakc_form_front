@@ -22,9 +22,15 @@ const router = createRouter({
                     path: ':id',
                     name: 'questionario',
                     component: () => import('../views/Questionario/Questionario.vue'),
+                },
+                {
+                    path: ':id/concluido',
+                    name: 'questionarioConcluido',
+                    component: () => import('../views/Questionario/QuestionarioConcluido.vue'),
                 }
             ]
         },
+
 
 
         {
@@ -32,6 +38,12 @@ const router = createRouter({
             name: '',
             component: () => import('../layouts/AppLayout.vue'),
             children: [
+                {
+                    path: 'assinatura',
+                    name: 'assinatura',
+                    component: () => import('../views/Perfil/Perfil.vue'),
+                },
+
                 {
                     path: '',
                     name: 'home',

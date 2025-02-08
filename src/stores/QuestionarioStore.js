@@ -50,6 +50,12 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             this.pergunta_index = this.pergunta_index + 1
 
 
+            var concluido = false
+            if (this.pergunta_index === this.lista_questao.length) {
+                concluido = true
+            }
+
+
             if (Array.isArray(this.resposta)) {
                 this.resposta = this.resposta[0]
             }
@@ -62,6 +68,7 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             formData.append('questao_id', this.questao_select.id);
             formData.append('resposta', this.resposta);
             formData.append('user_id', this.user_id);
+            formData.append('concluido', concluido);
 
             if (this.file != null) {
                 formData.append(`arquivo`, this.file);
@@ -74,14 +81,8 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
                 formData.append('utm_mediun', this.query_params.utm_mediun);
             }
 
-            try {
-                console.log('fazendo')
-                await Axios.post('/api/questionario', formData)
-                console.log('feito')
+            await Axios.post('/api/questionario', formData)
 
-            } catch (error) {
-                console.log(error)
-            }
 
             if (this.pergunta_index === this.lista_questao.length) {
                 return 'finalizado'
@@ -90,9 +91,9 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
 
             this.questao_select.config.regras_resposta.forEach((regra) => {
 
-                if (regra.resposta == this.resposta) {
+                if (regra.resposta === this.resposta) {
                     this.lista_questao.forEach((questao, index) => {
-                        if (questao.id == regra.pergunta) {
+                        if (questao.id === regra.pergunta) {
                             this.questao_select = this.lista_questao[index]
                             this.pergunta_index = index
 
@@ -101,6 +102,10 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
                 }
 
             })
+
+            if (this.questao_select.config.redirect !== '' || this.questao_select.config.redirect !== null) {
+                return this.questao_select.config.redirect
+            }
 
             this.questao_select = this.lista_questao[this.pergunta_index]
 
