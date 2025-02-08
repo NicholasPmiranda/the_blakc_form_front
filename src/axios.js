@@ -24,7 +24,6 @@ Axios.interceptors.response.use(
         }
 
         if (error.response && error.response.status === 402) {
-            localStorage.removeItem("token"); // Opcional: remove token inválido
             router.push("/assinatura");
         }
         return Promise.reject(error);
