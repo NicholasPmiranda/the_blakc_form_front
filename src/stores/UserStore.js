@@ -3,15 +3,16 @@ import {defineStore} from 'pinia'
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
-        user: null
+        user: null,
+        loading: false
     }),
 
     actions: {
         async login(email, password) {
 
             try {
-                const response = await Axios.post('api/login', { email, password });
-                const { token } = response.data;
+                const response = await Axios.post('api/login', {email, password});
+                const {token} = response.data;
                 if (token) {
                     localStorage.setItem('token', token);
                     console.log('Token set successfully:', token);
@@ -34,10 +35,20 @@ export const useUserStore = defineStore('userStore', {
         },
 
         async getAssinatura() {
+            this.loading = true
             const request = await Axios('/api/subscribe')
 
+            this.loading = false
 
             window.open(request.data, '_blank');
+        },
+        async getBilingPortal() {
+            this.loading = true
+            const request = await Axios('/api/biling-portal')
+
+            this.loading = false
+
+            window.open(request.data);
         }
     },
 })

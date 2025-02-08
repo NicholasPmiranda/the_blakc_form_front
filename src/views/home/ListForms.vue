@@ -12,18 +12,10 @@ const router = useRouter();
 const mainMenu = ref();
 const visible = ref(false)
 const form_name = ref('')
-
 homeStore.getlista()
 
 
-const mainItems = ref([
-    {
-        items: [
-            {label: 'Configurações', icon: 'pi pi-cog'},
-            {label: 'Sair', icon: 'pi pi-sign-out'}
-        ]
-    }
-]);
+
 
 const  form_load = ref(false)
 async function createForm() {
@@ -33,23 +25,12 @@ async function createForm() {
     visible.value = false;
     form_load.value = false;
 }
+
+
 </script>
 
 <template>
-    <Card class="card w-full">
-        <template #content>
-            <div class="flex justify-between items-center">
-                <div>
-                    UMA LOGO BONITA BEM AQUI
-                </div>
-                <div>
-                    <Button type="button" severity="secondary" icon="pi pi-ellipsis-v" @click="toggleMainMenu"
-                            aria-haspopup="true" aria-controls="overlay_menu"/>
-                    <Menu ref="mainMenu" id="overlay_menu" :model="mainItems" :popup="true"/>
-                </div>
-            </div>
-        </template>
-    </Card>
+
 
     <div class="mt-4 w-full flex justify-center">
         <div class="flex w-3/4 justify-between">

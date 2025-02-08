@@ -49,8 +49,21 @@ const router = createRouter({
                     name: 'home',
                     component: () => import('../views/home/ListForms.vue'),
                 },
+                // {
+                //     path: '/edit-form/:id',
+                //     name: 'edit-frm',
+                //     component: () => import('../views/form/EditForm.vue'),
+                // },
+
+            ]
+        },
+        {
+            path: '/edit-form/:id',
+            name: '',
+            component: () => import('../layouts/EditorLayout.vue'),
+            children: [
                 {
-                    path: '/edit-form/:id',
+                    path: '',
                     name: 'edit-frm',
                     component: () => import('../views/form/EditForm.vue'),
                 },
