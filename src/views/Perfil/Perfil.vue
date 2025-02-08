@@ -1,95 +1,87 @@
 <script setup>
-import {Button, Card} from "primevue";
+import {Button, Card, FloatLabel, InputText} from "primevue";
+import EditProfile from "@/components/svg/editProfile.vue";
 import {useUserStore} from "@/stores/UserStore.js";
-import AssinaturaSVG from "@/components/Assinatura/AssinaturaSVG.vue";
-import {onMounted} from "vue";
-import {useRouter} from "vue-router";
+import {ref} from "vue";
+import {useToast} from "primevue/usetoast";
 
 const userStore = useUserStore()
-const router = useRouter()
+const loading = ref(false)
+const toast = useToast()
 
-onMounted(async () => {
-    if (userStore.user.has_subscribe) {
-        userStore.getBilingPortal()
-        router.push('/')
+async  function salvar() {
+    loading.value = true
+    if (userStore.user.password !== userStore.user.password_confirm) {
+        toast.add({severity: 'error', summary: 'Erro', detail: 'Senhas não são iguais', life: 3000});
+        loading.value = false
+        return
     }
-})
+
+    await userStore.setProfile()
+    toast.add({severity: 'success', summary: 'Sucesso', detail: 'Perfil salvo', life: 3000});
+
+    loading.value = false
+}
 </script>
 
 <template>
-    <Card>
+    <Card class="">
         <template #content>
-            <div class="flex justify-center h-screen">
+            <div class="flex  h-[calc(100vh-9.25rem)]">
+                <div class="w-1/2  flex justify-center items-center ">
+                    <edit-profile class="w-1/2"/>
+                </div>
 
-                <div class="w-full md:w-1/3 flex border border-purple-default items-center justify-center h-max">
-                    <div>
-                        <AssinaturaSVG class="w-full"/>
-                        <h1 class="text-center text-4xl">Plano Pro</h1>
-                        <p class="text-center">Ideal para o seu negócio</p>
+                <div class="w-1/2 flex flex-col justify-center  ">
 
-                        <h1 class=" mt-12 text-center text-purple-default text-4xl">R$ 69,00</h1>
+                    <div class=" ">
+                        <div class="mt-10 flex gap-5 ">
+                            <div class="w-1/2">
+                                <FloatLabel>
+                                    <InputText id="over_label" v-model="userStore.user.name" class="w-full"/>
+                                    <label for="over_label">Nome</label>
+                                </FloatLabel>
+                            </div>
 
-                        <ul class="mt-12">
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Formulários ilimitados
-                            </li>
-
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Respostas ilimitadas
-                            </li>
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Integração com Pixel do Facebook
-                            </li>
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Integração com Google Tag Manager
-                            </li>
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Rastreio por UTMS
-                            </li>
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Integração com Calendly
-                            </li>
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Redirecionamento ao final do questionário
-                            </li>
-                            <li class="mt-2">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Regras de resposta
-                            </li>
-                            <li class="mt-2 text-center">
-                                <i class="pi pi-check" style="font-size: 1rem"></i>
-                                Dashboard com análise de desempenho do questionário
-                            </li>
-
-
-                        </ul>
-
-                        <div class="flex justify-center mt-4 mb-4 ">
-                            <Button :loading="userStore.loading"
-                                    class=""
-                                    icon="pi pi-dollar"
-                                    label="Assinar"
-                                    @click="userStore.getAssinatura()"
-                            />
+                            <div class="w-1/2">
+                                <FloatLabel>
+                                    <InputText id="over_label" v-model="userStore.user.email" class="w-full"/>
+                                    <label for="over_label">Email</label>
+                                </FloatLabel>
+                            </div>
                         </div>
 
-                    </div>
+                        <div class="mt-10  flex gap-5">
+                            <div class="w-1/2 ">
+                                <FloatLabel>
+                                    <InputText id="over_label" v-model="userStore.user.password" class="w-full"
+                                               type="password"/>
+                                    <label for="over_label">Senha</label>
+                                </FloatLabel>
+                            </div>
 
+                            <div class="w-1/2">
+                                <FloatLabel>
+                                    <InputText id="over_label" v-model="userStore.user.password_confirm" class="w-full"
+                                               type="password"/>
+                                    <label for="over_label">Confirmar senha</label>
+                                </FloatLabel>
+                            </div>
+                        </div>
+
+                        <Button :loading="loading" class="mt-8 w-full" icon="pi pi-save" label="salvar"
+                                @click="salvar"/>
+                    </div>
                 </div>
             </div>
         </template>
     </Card>
+
+
 </template>
 
 <style scoped>
-.svg-ilustracao {
-    /* width: 500px; */
+.profile-svg {
+    width: 600px;
 }
 </style>

@@ -3,7 +3,10 @@ import {defineStore} from 'pinia'
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
-        user: null,
+        user: {
+            name:null,
+            email:null
+        },
         loading: false
     }),
 
@@ -32,6 +35,11 @@ export const useUserStore = defineStore('userStore', {
             const request = await Axios('/api/profile')
 
             this.user = request.data
+        },
+
+        async setProfile() {
+            await Axios.post('/api/profile',this.user)
+
         },
 
         async getAssinatura() {

@@ -3,16 +3,27 @@ import {defineStore} from 'pinia'
 
 export const useHomeStore = defineStore('homeStore', {
     state: () => ({
-        list_form: null
+        list_form: null,
+        buscar: '',
+        total: 0,
+        page: 1,
+        per_page:15
     }),
 
     actions: {
         async getlista() {
 
             try {
-                const response = await Axios.get('api/form');
-                const {data} = response;
 
+                const response = await Axios.get('api/form', {
+                    params: {
+                        buscar: this.buscar,
+                        page:this.page,
+                    }
+                });
+                const {data, total} = response.data;
+
+                this.total = total
                 this.list_form = data
 
                 return true;

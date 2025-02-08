@@ -1,11 +1,12 @@
 <script setup>
-import {RouterView} from 'vue-router'
+import {RouterView, useRouter} from 'vue-router'
 import {useUserStore} from "@/stores/UserStore.js";
 import {Button, Card, Menu} from "primevue";
 import {onMounted, ref} from "vue";
 
 const userStore = useUserStore()
 const menu = ref('')
+const router = useRouter()
 
 
 const mainItems = ref([
@@ -14,8 +15,14 @@ const mainItems = ref([
         label: 'Perfil',
         items: [
             {
+                label: 'Home',
+                icon: 'pi pi-home',
+                route:'/'
+            },
+            {
                 label: 'Configuração',
                 icon: 'pi pi-cog',
+                route:'/perfil'
             },
             {
                 label: 'Assinatura',
@@ -25,6 +32,10 @@ const mainItems = ref([
             {
                 label: 'Logout',
                 icon: 'pi pi-sign-out',
+                command: () => {
+                    localStorage.removeItem('token')
+                    router.push('/login')
+                }
             }
         ]
     },

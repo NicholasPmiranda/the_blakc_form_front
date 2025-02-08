@@ -41,7 +41,7 @@ const router = createRouter({
                 {
                     path: 'assinatura',
                     name: 'assinatura',
-                    component: () => import('../views/Perfil/Perfil.vue'),
+                    component: () => import('../views/Perfil/Assinatura.vue'),
                 },
 
                 {
@@ -49,11 +49,11 @@ const router = createRouter({
                     name: 'home',
                     component: () => import('../views/home/ListForms.vue'),
                 },
-                // {
-                //     path: '/edit-form/:id',
-                //     name: 'edit-frm',
-                //     component: () => import('../views/form/EditForm.vue'),
-                // },
+                {
+                    path: '/perfil',
+                    name: 'perfil',
+                    component: () => import('../views/Perfil/Perfil.vue'),
+                },
 
             ]
         },
@@ -70,6 +70,15 @@ const router = createRouter({
 
             ]
         },
+
+        {
+            path: '/:catchAll(.*)', // Captura qualquer caminho não definido
+            name: 'NotFound',
+            component: () => import('../views/NotFound.vue'),
+
+        }
+
+
 
     ],
 })

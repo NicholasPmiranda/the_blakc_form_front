@@ -1,15 +1,13 @@
 <script setup>
 import {ref} from "vue";
-import {Button, Card, Dialog, InputGroup, InputGroupAddon, InputText, Menu} from "primevue";
+import {Button, Card, Dialog, InputGroup, InputGroupAddon, InputText, Paginator} from "primevue";
 import {useToast} from "primevue/usetoast";
-import {useRouter} from "vue-router";
 import {useHomeStore} from "@/stores/homeStore.js";
 
 
 const homeStore = useHomeStore()
 const toast = useToast();
-const router = useRouter();
-const mainMenu = ref();
+
 const visible = ref(false)
 const form_name = ref('')
 homeStore.getlista()
@@ -25,7 +23,11 @@ async function createForm() {
     visible.value = false;
     form_load.value = false;
 }
-
+function onPageChange(event) {
+    homeStore.page = event.page + 1;
+    homeStore.per_page = event.rows;
+    homeStore.getlista();
+}
 
 </script>
 
@@ -35,10 +37,10 @@ async function createForm() {
     <div class="mt-4 w-full flex justify-center">
         <div class="flex w-3/4 justify-between">
             <InputGroup>
+                <InputText v-model="homeStore.buscar" placeholder="Buscar"/>
                 <InputGroupAddon>
-                    <i class="pi pi-search"></i>
+                    <Button icon="pi pi-search" label="Buscar" @click="homeStore.getlista()"/>
                 </InputGroupAddon>
-                <InputText placeholder="Buscar"/>
                 <InputGroupAddon>
                     <Button class="b" label="Criar Formulário" @click="visible = !visible"/>
                 </InputGroupAddon>
@@ -69,7 +71,21 @@ async function createForm() {
                 </template>
             </Card>
         </div>
+
+
     </div>
+    <Paginator :rows="15" :totalRecords="homeStore.total" @page="onPageChange">
+        <template #container="{ first, last, page, pageCount, prevPageCallback, nextPageCallback, totalRecords }">
+            <div class="flex items-center gap-4 border border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
+                <Button icon="pi pi-chevron-left" rounded text @click="prevPageCallback" :disabled="page === 0" />
+                <div class="text-color font-medium">
+                    <span class="block sm:hidden">pagina {{ page + 1 }} de {{ pageCount }}</span>
+                    <span class="hidden sm:block">mostrando {{ first }} para {{ last }} de {{ totalRecords }}</span>
+                </div>
+                <Button icon="pi pi-chevron-right" rounded text @click="nextPageCallback" :disabled="page === pageCount - 1" />
+            </div>
+        </template>
+    </Paginator>
 
     <Dialog v-model:visible="visible" modal header="Cadastrar formulario" :style="{ width: '25rem' }">
         <div class="flex flex-col  mb-4">

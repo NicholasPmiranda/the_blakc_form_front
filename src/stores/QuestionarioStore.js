@@ -1,6 +1,7 @@
 import {Axios} from "@/axios.js";
 import {defineStore} from 'pinia'
 import {v4 as uuidv4} from 'uuid';
+import router from "@/router";
 
 export const useQuestionarioStore = defineStore('questionarioStore', {
     state: () => ({
@@ -29,21 +30,29 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             this.query_params = query
         },
         async listarQuestoes(form_id) {
-            const request = await Axios.get('/api/questionario', {
-                params: {
-                    form_id: form_id
+
+            try {
+                const request = await Axios.get('/api/questionario', {
+                    params: {
+                        form_id: form_id
+                    }
+                })
+                const {questoes, form} = request.data
+
+                this.lista_questao = questoes
+                this.questao_select = questoes[0]
+
+                this.pixel = form.pixel
+                this.gtm = form.gtm
+
+
+                return true
+            } catch (error) {
+                if(error.status === 404){
+                    router.push("/not-found");
                 }
-            })
-            const {questoes, form} = request.data
+            }
 
-            this.lista_questao = questoes
-            this.questao_select = questoes[0]
-
-            this.pixel = form.pixel
-            this.gtm = form.gtm
-
-
-            return true
         },
 
         async proximoQuestao() {
