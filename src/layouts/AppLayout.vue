@@ -62,7 +62,7 @@ onMounted(async () => {
                             UMA LOGO BONITA BEM AQUI
                         </div>
                         <div>
-                            <Button aria-controls="overlay_menu" aria-haspopup="true" icon="pi pi-ellipsis-v" type="button"
+                            <Button size="small" aria-controls="overlay_menu" aria-haspopup="true" icon="pi pi-ellipsis-v" type="button"
                                     @click="toggle"/>
                             <Menu id="overlay_menu" ref="menu" :model="mainItems" :popup="true">
                                 <template #item="{ item, props }">

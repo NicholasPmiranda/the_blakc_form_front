@@ -15,19 +15,16 @@ const loading = ref(false)
 const errors = reactive({})
 const form = reactive({
     email: 'admin@admin.com',
-    password: 'admin123'
 })
 
 const handleLogin = async () => {
     loading.value = true
-    errors.value = {}
 
-    const loginAttempt = await userStore.login(form.email, form.password)
+    const loginAttempt = await userStore.esqueminhaSenha(form.email)
     loading.value = false
 
     if (loginAttempt) {
-        router.push('/')
-
+        router.push('/login')
     } else {
         toast.add({ severity: 'error', summary: 'Erro no login', detail: 'Credencial invalida', life: 3000 });
     }
@@ -46,8 +43,8 @@ const handleLogin = async () => {
             <div class="" >
                 <div class="text-center mb-5">
                     <!-- Opcional: Adicione um logo aqui -->
-                    <div class="text-900 text-3xl font-medium mb-3">Bem-vindo!</div>
-                    <span class="text-600 font-medium">Entre com suas credenciais</span>
+                    <div class="text-900 text-3xl font-medium mb-3">Esqueci minha senha</div>
+                    <span class="text-600 font-medium">Informe seu email</span>
                 </div>
 
                 <div class="flex flex-col items-center   gap-4">
@@ -64,30 +61,14 @@ const handleLogin = async () => {
                         <small class="text-red-500" v-if="errors.email">{{ errors.email }}</small>
                     </div>
 
-                    <div>
-                        <label for="password" class="block text-900 font-medium mb-2">Senha</label>
-                        <InputText
-                            id="password"
-                            type="password"
-                            v-model="form.password"
-                            :class="{'p-invalid': errors.password}"
-                            :feedback="false"
-                            :toggleMask="true"
-                            placeholder="Digite sua senha"
-                        />
-                        <small class="text-red-500" v-if="errors.password">{{ errors.password }}</small>
-                    </div>
-                    <router-link to="/esqueci-minha-senha">
-                        <small>Esqueceu a senha ?</small>
-                    </router-link>
 
                     <Button
-                        label="Entrar"
+                        label="enviar"
                         @click="handleLogin"
                         :loading="loading"
                     />
-                    <router-link to="/cadastro">
-                        <p>Registrar</p>
+                    <router-link to="/login">
+                        <p>Voltar para o login</p>
                     </router-link>
                 </div>
             </div>

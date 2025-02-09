@@ -26,7 +26,7 @@ const editFormStore = useEditFormStore()
 const route = useRoute()
 const visibleConfig = ref(false)
 const tipos_pergunta = reactive([
-    'texto_simples',
+    'texto simples',
     'alternativas',
     'email',
     'range',
@@ -51,7 +51,7 @@ function getSeverity(tipo) {
 
 function deleteQuestao(questao, index) {
     confirm.require({
-        message: 'Voce realmente ques remover esta questao ' + questao.titulo,
+        message: 'Voce realmente ques remover esta questão ' + questao.titulo,
         header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         rejectProps: {
@@ -66,7 +66,7 @@ function deleteQuestao(questao, index) {
         },
         accept: () => {
             editFormStore.removerQuestao(questao.id, index)
-            toast.add({severity: 'success', summary: 'sucesso', detail: 'Questao removida com sucesso', life: 3000});
+            toast.add({severity: 'success', summary: 'sucesso', detail: 'Questão removida com sucesso', life: 3000});
         },
 
     });
@@ -75,7 +75,7 @@ function deleteQuestao(questao, index) {
 async function updateObrigatorio() {
     await editFormStore.updateObrigatorio()
 
-    toast.add({severity: 'success', summary: 'sucesso', detail: 'Questao atualizada com sucesso', life: 3000});
+    toast.add({severity: 'success', summary: 'sucesso', detail: 'Questão atualizada com sucesso', life: 3000});
 
 }
 
@@ -96,7 +96,7 @@ function openConfig(element) {
 
             <template #content class=" ">
                 <div class="flex justify-center">
-                    <Button icon="pi pi-plus" label="Adicionar questao" size="small"
+                    <Button icon="pi pi-plus" label="Adicionar questão" size="small"
                             :loading="editFormStore.loading"
                             @click="editFormStore.salvarQuestao(route.params.id)"/>
                 </div>

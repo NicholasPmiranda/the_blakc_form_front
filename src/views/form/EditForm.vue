@@ -35,7 +35,7 @@ async function publicar() {
             <div class="flex justify-between">
                 <div>
                     <router-link to="/">
-                        <Button icon="pi pi-arrow-left" label="volvar" size="small" variant="text"/>
+                        <Button icon="pi pi-arrow-left" label="voltar" size="small" variant="text"/>
                     </router-link>
                 </div>
                 <div class=" flex">
@@ -45,24 +45,24 @@ async function publicar() {
                             @click="setTab('editor')"
                     />
                     <Button :variant="tab_select === 'opcao' ? 'outlined' : 'text'"
-                            icon="pi pi-trash" label="opcoes" size="small"
+                            icon="pi pi-cog" label="Opções" size="small"
                             @click="setTab('opcao')"/>
                     <Button :variant="tab_select === 'compartilhar' ? 'outlined' : 'text'"
-                            icon="pi pi-times" label="Compartilhar" size="small"
+                            icon="pi pi-share-alt" label="Compartilhar" size="small"
                             @click="setTab('compartilhar')"/>
                     <Button :variant="tab_select === 'analicts' ? 'outlined' : 'text'"
                             icon="pi pi-chart-line" label="analytics" size="small"
                             @click="setTab('analicts')"/>
                     <Button :variant="tab_select === 'respostas' ? 'outlined' : 'text'"
-                            icon="pi pi-times" label="respostas" size="small"
+                            icon="pi pi-book" label="respostas" size="small"
                             @click="setTab('respostas')"/>
                 </div>
                 <div>
                     <ButtonGroup>
                         <router-link :to="`/questionario/${route.params.id}`">
-                            <Button icon="pi pi-check" label="Ver" variant="text"/>
+                            <Button icon="pi pi-link" label="Ver" variant="text"/>
                         </router-link>
-                        <Button :loading="formStore.loading" icon="pi pi-trash" label="Publicar" variant="text" @click="publicar"/>
+                        <Button :loading="formStore.loading" icon="pi pi-send" label="Publicar" variant="text" @click="publicar"/>
                     </ButtonGroup>
                 </div>
             </div>
@@ -80,8 +80,5 @@ async function publicar() {
 
 <style scoped>
 
-.ative-componente {
-    background-color: #1a142a;
-}
 
 </style>

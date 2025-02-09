@@ -83,9 +83,7 @@ function deleteRegra(regra, index) {
             </FloatLabel>
             <Button :loading="editFormStore.loading"
                     aria-label="Save"
-                    class="h-10"
                     icon="pi pi-save"
-                    size="small"
                     @click="addRedirect"
             />
         </div>

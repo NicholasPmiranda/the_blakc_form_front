@@ -11,7 +11,40 @@ const router = createRouter({
                     path: '',
                     name: 'login',
                     component: () => import('../views/login/Login.vue'),
-                }
+                },
+            ]
+        },
+        {
+            path: '/cadastro',
+            component: () => import('../layouts/OpenLayout.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'cadastr',
+                    component: () => import('../views/login/Cadastro.vue'),
+                },
+            ]
+        },
+        {
+            path: '/esqueci-minha-senha',
+            component: () => import('../layouts/OpenLayout.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'EsqueciMinhaSenha',
+                    component: () => import('../views/login/EsqueciMinhaSenha.vue'),
+                },
+            ]
+        },
+        {
+            path: '/recupear-senha/:token',
+            component: () => import('../layouts/OpenLayout.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'cadastr',
+                    component: () => import('../views/login/RecuperarMinhaSenha.vue'),
+                },
             ]
         },
         {

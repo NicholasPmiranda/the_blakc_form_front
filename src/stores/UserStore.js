@@ -4,8 +4,8 @@ import {defineStore} from 'pinia'
 export const useUserStore = defineStore('userStore', {
     state: () => ({
         user: {
-            name:null,
-            email:null
+            name: null,
+            email: null
         },
         loading: false
     }),
@@ -30,6 +30,38 @@ export const useUserStore = defineStore('userStore', {
             }
         },
 
+        async cadastro(email, password, name) {
+
+            try {
+                await Axios.post('api/cadastro', {email, password, name});
+
+                return true;
+            } catch (error) {
+                console.error('Error during cadastro:', error.response || error.message);
+                return false;
+            }
+        },
+        async esqueminhaSenha(email) {
+
+            try {
+                await Axios.post('api/esqueci-minha-senha', {email});
+
+                return true;
+            } catch (error) {
+                console.error('Error during cadastro:', error.response || error.message);
+                return false;
+            }
+        },
+        async recuperarSenha(password, token) {
+            try {
+                await Axios.post('api/recuperar-minha-senha', {password, token});
+
+                return true;
+            } catch (error) {
+                console.error('Error during cadastro:', error.response || error.message);
+                return false;
+            }
+        },
 
         async profile() {
             const request = await Axios('/api/profile')
@@ -38,7 +70,7 @@ export const useUserStore = defineStore('userStore', {
         },
 
         async setProfile() {
-            await Axios.post('/api/profile',this.user)
+            await Axios.post('/api/profile', this.user)
 
         },
 
