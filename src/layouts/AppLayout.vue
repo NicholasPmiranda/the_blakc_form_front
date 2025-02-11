@@ -53,7 +53,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="hidden  w-full sm:flex justify-center mt-3  ">
+    <div class="w-full flex justify-center mt-3  ">
         <div class=" items-center w-11/12 ">
             <Card class="card w-full">
                 <template #content>
@@ -85,11 +85,7 @@ onMounted(async () => {
             <RouterView/>
         </div>
     </div>
-    <div class="block sm:hidden">
-        <div class="flex justify-center text-center items-center h-screen text-4xl b ">
-            Seu PC tá com saudades de você! Aproveita pra usar o editor nele!
-        </div>
-    </div>
+
 </template>
 
 <style scoped>

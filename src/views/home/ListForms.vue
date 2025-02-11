@@ -32,15 +32,15 @@ function onPageChange(event) {
 </script>
 
 <template>
-    <div class="mt-4 w-full flex justify-center">
+    <div class="hidden mt-4 w-full sm:flex justify-center">
         <div class="flex w-3/4 justify-between">
             <InputGroup size="small">
                 <InputText size="small" v-model="homeStore.buscar" placeholder="Buscar"/>
                 <InputGroupAddon>
                     <Button size="small" icon="pi pi-search" label="Buscar" @click="homeStore.getlista()"/>
                 </InputGroupAddon>
-                <InputGroupAddon>
-                    <Button size="small" class="b" label="Criar Formulário" @click="visible = !visible"/>
+                <InputGroupAddon >
+                    <Button size="small" class="hidden" label="Criar Formulário" @click="visible = !visible"/>
                 </InputGroupAddon>
             </InputGroup>
         </div>

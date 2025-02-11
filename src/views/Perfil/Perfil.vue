@@ -27,12 +27,12 @@ async  function salvar() {
 <template>
     <Card class="">
         <template #content>
-            <div class="flex  h-[calc(100vh-9.25rem)]">
-                <div class="w-1/2  flex justify-center items-center ">
+            <div class="flex flex-wrap    h-[calc(100vh-9.25rem)]">
+                <div class="w-full sm:w-1/2  flex justify-center items-center ">
                     <edit-profile class="w-1/2"/>
                 </div>
 
-                <div class="w-1/2 flex flex-col justify-center  ">
+                <div class="w-full sm:w-1/2 flex flex-col justify-center  ">
 
                     <div class=" ">
                         <div class="mt-10 flex gap-5 ">

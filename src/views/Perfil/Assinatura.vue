@@ -21,7 +21,7 @@ onMounted(async () => {
         <template #content>
             <div class="flex justify-center h-screen">
 
-                <div class="w-full md:w-1/3 flex border border-purple-default items-center justify-center h-max">
+                <div class="w-full md:w-1/3 flex   items-center justify-center h-max">
                     <div>
                         <AssinaturaSVG class="w-full"/>
                         <h1 class="text-center text-4xl">Plano Pro</h1>

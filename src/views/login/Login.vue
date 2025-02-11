@@ -4,7 +4,6 @@ import {useRouter} from 'vue-router'
 import {Button, InputText} from "primevue";
 import {useUserStore} from "@/stores/UserStore.js";
 import { useToast } from "primevue/usetoast";
-import OpenLayout from "@/layouts/OpenLayout.vue";
 import LoginSVG from "@/components/svg/loginSVG.vue";
 const toast = useToast();
 
@@ -39,10 +38,10 @@ const handleLogin = async () => {
 <template>
 
     <div class="h-screen flex">
-        <div class="w-1/2 flex justify-center">
+        <div class="hidden md:flex w-1/2   justify-center">
             <login-s-v-g/>
         </div>
-        <div class=" w-1/2 h-full flex  items-center justify-center">
+        <div class="w-full md:w-1/2 h-full flex  items-center justify-center">
             <div class="" >
                 <div class="text-center mb-5">
                     <!-- Opcional: Adicione um logo aqui -->
