@@ -20,7 +20,7 @@ const router = createRouter({
             children: [
                 {
                     path: '',
-                    name: 'cadastr',
+                    name: 'cadastro',
                     component: () => import('../views/login/Cadastro.vue'),
                 },
             ]

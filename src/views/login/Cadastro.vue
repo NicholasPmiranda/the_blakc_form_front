@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref} from 'vue'
+import {onMounted, reactive, ref} from 'vue'
 import {useRouter} from 'vue-router'
 import {Button, InputText,Password} from "primevue";
 import {useUserStore} from "@/stores/UserStore.js";
@@ -17,7 +17,7 @@ const form = reactive({
     email: '',
     password: ''
 })
-
+alert('a')
 const handleLogin = async () => {
     loading.value = true
     errors.value = {}
@@ -35,15 +35,16 @@ const handleLogin = async () => {
 
 
 }
+console.log('a')
 </script>
 
 <template>
 
     <div class="h-screen flex">
-        <div class="w-1/2 justify-center items-center">
+        <div class="hidden md:flex w-1/2 justify-center items-center">
             <login-s-v-g/>
         </div>
-        <div class=" w-1/2 h-full flex  items-center justify-center">
+        <div class="w-full  sm:w-1/2 h-full flex  items-center justify-center">
             <div class="" >
                 <div class="text-center mb-5">
                     <!-- Opcional: Adicione um logo aqui -->
