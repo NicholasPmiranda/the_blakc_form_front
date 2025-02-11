@@ -20,7 +20,6 @@ const form = reactive({
 const handleLogin = async () => {
     loading.value = true
 
-    console.log(form)
     if(form.password !== form.confirm_password){
         toast.add({ severity: 'error', summary: 'Erro', detail: 'Senhas não batem', life: 3000 });
         loading.value = false
@@ -44,13 +43,12 @@ const handleLogin = async () => {
 <template>
 
     <div class="h-screen flex">
-        <div class="w-1/2 flex justify-center">
+        <div class="w-1/2 hidden  sm:flex justify-center">
             <login-s-v-g/>
         </div>
-        <div class=" w-1/2 h-full flex  items-center justify-center">
+        <div class="w-full sm:w-1/2 h-full flex  items-center justify-center">
             <div class="" >
                 <div class="text-center mb-5">
-                    <!-- Opcional: Adicione um logo aqui -->
                     <div class="text-900 text-3xl font-medium mb-3">Recuperar minha senha</div>
                     <span class="text-600 font-medium">Informe sua nova senha</span>
                 </div>

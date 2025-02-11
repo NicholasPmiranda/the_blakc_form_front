@@ -36,10 +36,10 @@ const handleLogin = async () => {
 <template>
 
     <div class="h-screen flex">
-        <div class="w-1/2 flex justify-center">
+        <div class="w-1/2 hidden sm:flex justify-center">
             <login-s-v-g/>
         </div>
-        <div class=" w-1/2 h-full flex  items-center justify-center">
+        <div class="w-full sm:w-1/2 h-full flex  items-center justify-center">
             <div class="" >
                 <div class="text-center mb-5">
                     <!-- Opcional: Adicione um logo aqui -->

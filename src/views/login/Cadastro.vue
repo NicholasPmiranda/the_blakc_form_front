@@ -17,7 +17,6 @@ const form = reactive({
     email: '',
     password: ''
 })
-alert('a')
 const handleLogin = async () => {
     loading.value = true
     errors.value = {}
@@ -35,7 +34,6 @@ const handleLogin = async () => {
 
 
 }
-console.log('a')
 </script>
 
 <template>
