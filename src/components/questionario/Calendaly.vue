@@ -3,18 +3,10 @@ import {useEditFormStore} from "@/stores/EditFormStore.js";
 import {useQuestionarioStore} from "@/stores/QuestionarioStore.js";
 import {onMounted} from "vue";
 
-const questionarioStore = useQuestionarioStore();
-const calendlyUrl = 'https://calendly.com/cplatinado/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=1e1e2e&text_color=ffffff&primary_color=b58fff'
+const questionario = useQuestionarioStore();
+const calendlyUrl = questionario.questao_select.config.url_agenda+'?hide_event_type_details=1&hide_gdpr_banner=1&background_color=1e1e2e&text_color=ffffff&primary_color=b58fff'
 
-function teste(){
-    const nameInput = document.querySelector('input[name="full_name"]')
-    const emailInput = document.querySelector('input[name="email"]')
 
-    console.log('clik')
-
-    nameInput.value = 'João Silva'
-    emailInput.value = 'joao@example.com'
-}
 onMounted(() => {
     const script = document.createElement('script')
     script.src = 'https://assets.calendly.com/assets/external/widget.js'
@@ -25,12 +17,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div class="flex justify-center flex-col ">
         <p class="input-pergunta text-center">{{ questionario.questao_select.titulo }}</p>
         <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
         <div class="mt-20">
-            <div @click="teste"
+            <div
                 class="calendly-inline-widget"
                 :data-url="calendlyUrl"
                 :style="{ minWidth: '320px', height: '500px' }"

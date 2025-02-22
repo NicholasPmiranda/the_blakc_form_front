@@ -7,7 +7,7 @@ const ediFormStore = useEditFormStore()
 </script>
 
 <template>
-    <div>
+    <div class="flex justify-center flex-col ">
         <p class="input-pergunta text-center">{{ questionario.questao_select.titulo }}</p>
         <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 

@@ -6,12 +6,7 @@ import {useEditFormStore} from "@/stores/EditFormStore.js";
 
 const editFormStore = useEditFormStore()
 
-const categories = ref([
-    {name: "Accounting", key: 1},
-    {name: "Marketing", key: 2},
-    {name: "Production", key: 3},
-    {name: "Research", key: 4}
-]);
+const categories = ref([]);
 
 const selectedCategories = ref(['Marketing']);
 
@@ -78,7 +73,7 @@ watch(
                     <div class="flex items-center">
 <!--                        <Button variant="text" size="small" icon="pi pi-arrows-v" />-->
                         <Button variant="text" size="small" icon="pi pi-bars" />
-                        <Checkbox  name="category" :value="element.name"/>
+                        <Checkbox @change="editFormStore.checkboxUpdate()" v-model="editFormStore.checkbox_select"  name="category" :value="element.name"/>
                         <input class="input-descricao" v-model="element.name"/>
                         <Button variant="text" size="small" @click="editFormStore.removerAlterternativa(index)"  severity="danger" icon="pi pi-trash" />
                     </div>

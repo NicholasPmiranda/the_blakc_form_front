@@ -67,7 +67,7 @@ function onPageChange(event) {
 
             <Paginator class="mt-10" :rows="15" :totalRecords="homeStore.total" @page="onPageChange">
                 <template #container="{ first, last, page, pageCount, prevPageCallback, nextPageCallback, totalRecords }">
-                    <div class="flex items-center gap-4 border border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
+                    <div class="flex items-center gap-4  border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
                         <Button icon="pi pi-chevron-left" rounded text @click="prevPageCallback" :disabled="page === 0" />
                         <div class="text-color font-medium">
                             <span class="block sm:hidden">pagina {{ page + 1 }} de {{ pageCount }}</span>

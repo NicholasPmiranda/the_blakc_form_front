@@ -1,3 +1,10 @@
+<!--contexto-->
+
+<!--deve cadastrar o user com os seguintes dados-->
+<!--name nicholas-->
+<!--email teste@teste.com-->
+<!--password 123-->
+<!--nao crie test de render dos componentes do prime vue-->
 <script setup>
 import {onMounted, reactive, ref} from 'vue'
 import {useRouter} from 'vue-router'

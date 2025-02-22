@@ -8,13 +8,13 @@ const questionario = useQuestionarioStore()
 </script>
 
 <template>
-    <div class="">
+    <div class="flex justify-center flex-col ">
         <p class="input-pergunta ">{{ questionario.questao_select.titulo }}</p>
         <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
         <div class="mt-4">
             <div class="flex items-center" v-for="alternativa in questionario.questao_select.alternativas">
-                <Checkbox v-model="questionario.resposta" name="alternativa" :value="alternativa.name" />
+                <Checkbox @change="questionario.checkboxUpdate" v-model="questionario.resposta" name="alternativa" :value="alternativa.name" />
                 <input class="input-descricao" :value="alternativa.name" readonly/>
             </div>
         </div>

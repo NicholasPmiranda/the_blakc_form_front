@@ -5,6 +5,7 @@ export const useEditFormStore = defineStore('editFormStore', {
     state: () => ({
         lista_questao: null,
         form_select: {},
+        checkbox_select: [],
         questao_select: {
             id: 0,
             tipo: "",
@@ -27,7 +28,17 @@ export const useEditFormStore = defineStore('editFormStore', {
             this.loading = false
             return true
         },
+        checkboxUpdate() {
+            const tamanho_lista_resposta = this.checkbox_select.length
+            const ultimo = tamanho_lista_resposta - 1
 
+            if (tamanho_lista_resposta > this.questao_select.config.limite_respostas) {
+
+                this.checkbox_select = this.checkbox_select.splice(ultimo, 1)
+            }
+            console.log(this.checkbox_select)
+
+        },
         async listarQuestoes(form_id) {
             this.loading = true
             const request = await Axios.get('/api/questoes', {

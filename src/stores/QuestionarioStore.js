@@ -13,7 +13,7 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             config: [],
         },
         pergunta_index: 0,
-        resposta: '',
+        resposta: null,
         user_id: uuidv4(),
         form_id: null,
         pixel: [],
@@ -25,9 +25,19 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
     }),
 
     actions: {
-
         addQueryParams(query) {
             this.query_params = query
+        },
+
+        checkboxUpdate() {
+            const tamanho_lista_resposta = this.resposta.length
+            const ultimo = tamanho_lista_resposta - 1
+
+            if (tamanho_lista_resposta > this.questao_select.config.limite_respostas) {
+
+                this.resposta = this.resposta.splice(ultimo, 1)
+            }
+
         },
         async listarQuestoes(form_id) {
 
@@ -48,7 +58,7 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
 
                 return true
             } catch (error) {
-                if(error.status === 404){
+                if (error.status === 404) {
                     router.push("/not-found");
                 }
             }
@@ -66,7 +76,7 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
 
 
             if (Array.isArray(this.resposta)) {
-                this.resposta = this.resposta[0]
+                this.resposta = this.resposta.join(', ')
             }
 
 
@@ -75,9 +85,16 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
             formData.append('form_id', this.form_id);
             formData.append('questao', this.questao_select.titulo);
             formData.append('questao_id', this.questao_select.id);
-            formData.append('resposta', this.resposta);
             formData.append('user_id', this.user_id);
             formData.append('concluido', concluido);
+
+
+            if(this.questao_select.tipo === 'data'){
+                formData.append('resposta', this.formatarDataBrasileira(this.resposta));
+            }else{
+                formData.append('resposta', this.resposta);
+
+            }
 
             if (this.file != null) {
                 formData.append(`arquivo`, this.file);
@@ -99,8 +116,7 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
 
 
             this.questao_select.config.regras_resposta.forEach((regra) => {
-
-                if (regra.resposta === this.resposta) {
+                if (this.resposta.includes(regra.resposta)) {
                     this.lista_questao.forEach((questao, index) => {
                         if (questao.id === regra.pergunta) {
                             this.questao_select = this.lista_questao[index]
@@ -112,13 +128,24 @@ export const useQuestionarioStore = defineStore('questionarioStore', {
 
             })
 
+            this.questao_select = this.lista_questao[this.pergunta_index]
+
+            this.resposta = ''
+
             if (this.questao_select.config.redirect !== '' || this.questao_select.config.redirect !== null) {
                 return this.questao_select.config.redirect
             }
 
-            this.questao_select = this.lista_questao[this.pergunta_index]
 
-            this.resposta = ''
+        },
+
+
+        formatarDataBrasileira(dataString) {
+            const data = new Date(dataString);
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = String(data.getMonth() + 1).padStart(2, '0'); // Os meses começam do 0
+            const ano = data.getFullYear();
+            return `${dia}/${mes}/${ano}`;
         }
 
     },

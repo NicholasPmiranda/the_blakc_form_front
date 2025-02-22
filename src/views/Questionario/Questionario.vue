@@ -44,10 +44,12 @@ async function proximo() {
     }
 
 
-    console.log(resposta)
-    if (resposta.includes("https")) {
-        window.open(resposta, "_blank");
+    if(Array.isArray(resposta)){
+        if (resposta.includes("https")) {
+            window.open(resposta, "_blank");
+        }
     }
+
 }
 
 async function carregarPixel() {
@@ -93,11 +95,11 @@ onMounted(async () => {
 <template>
     <Pixel/>
     <Gtm/>
-    <div class="w-full h-screen  flex items-center ">
-        <Card class="w-full">
+    <div class="w-full h-screen   flex items-center ">
+        <Card class="w-full ">
             <template #content>
-                <div class="h-screen-minus-165 flex justify-center items-center">
-                    <TextoSimplesInput v-if="questionarioStore.questao_select.tipo === 'texto_simples' "/>
+                <div class="h-screen-minus-165   flex justify-center items-center">
+                    <TextoSimplesInput v-if="questionarioStore.questao_select.tipo === 'texto simples' "/>
                     <EmailInput v-if="questionarioStore.questao_select.tipo === 'email'"/>
                     <AlternativasInput v-if="questionarioStore.questao_select.tipo === 'alternativas' "/>
                     <ArquivoInput v-if="questionarioStore.questao_select.tipo === 'arquivo' "/>

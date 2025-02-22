@@ -1,7 +1,5 @@
 <script setup>
-import {useEditFormStore} from "@/stores/EditFormStore.js";
 import {computed, ref, watch} from "vue";
-import {useConfigGeral} from "@/stores/ConfigGeralStore.js";
 import {Slider} from "primevue";
 import {useQuestionarioStore} from "@/stores/QuestionarioStore.js";
 
@@ -17,7 +15,7 @@ const intpuValor = ref()
         <p class="input-descricao text-center">{{ questionario.questao_select.descricao }}</p>
 
         <div class="mt-20 text-center">
-            <Slider v-model="intpuValor"
+            <Slider v-model="questionario.resposta"
                     :orientation="questionario.questao_select.config.orientacao"
                     :step="questionario.questao_select.config.steps"
                     :range="questionario.questao_select.config.invervalos"
@@ -25,13 +23,13 @@ const intpuValor = ref()
                     :max="questionario.questao_select.config.valor_final"
             />
 
-            <div  class="text-center mt-8" v-if="Array.isArray(intpuValor)">
-                Valor inicial: {{intpuValor[0]}}
+            <div  class="text-center mt-8" v-if="Array.isArray(questionario.resposta)">
+                Valor inicial: {{questionario.resposta[0]}}
                 <br>
-                Valor final: {{intpuValor[1]}}
+                Valor final: {{questionario.resposta[1]}}
             </div>
             <div v-else>
-                {{intpuValor}}
+                {{questionario.resposta}}
             </div>
         </div>
 

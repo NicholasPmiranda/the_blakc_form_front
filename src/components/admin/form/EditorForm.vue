@@ -17,6 +17,7 @@ import RegrasRespostas from "@/components/admin/form/regrasRespostas/RegrasRespo
 import Calendario from "@/components/admin/form/tiposRespostas/Calendario.vue";
 import ConfigCalendario from "@/components/admin/form/config/ConfigCalendario.vue";
 import Calendaly from "@/components/admin/form/tiposRespostas/Calendaly.vue";
+import ConfigAlternativas from "@/components/admin/form/config/ConfigAlternativas.vue";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -159,7 +160,7 @@ function openConfig(element) {
                 </div>
 
                 <div class="h-screen-minus-165 flex justify-center items-center">
-                    <TextoSimplesInput v-if="editFormStore.questao_select.tipo === 'texto_simples' "/>
+                    <TextoSimplesInput v-if="editFormStore.questao_select.tipo === 'texto simples' "/>
                     <EmailInput v-if="editFormStore.questao_select.tipo === 'email'"/>
                     <AlternativasInput v-if="editFormStore.questao_select.tipo === 'alternativas' "/>
                     <ArquivoInput v-if="editFormStore.questao_select.tipo === 'arquivo' "/>
@@ -176,7 +177,7 @@ function openConfig(element) {
             position="right">
 
         <RegrasRespostas/>
-
+        <ConfigAlternativas v-if="editFormStore.questao_select.tipo === 'alternativas'"/>
         <ConfigRange v-if="editFormStore.questao_select.tipo === 'range'"/>
         <ConfigCalendario v-if="editFormStore.questao_select.tipo === 'data'"/>
 

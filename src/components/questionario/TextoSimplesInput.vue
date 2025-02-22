@@ -6,12 +6,11 @@ const questionario = useQuestionarioStore()
 </script>
 
 <template>
-    <div>
+    <div class="flex justify-center flex-col ">
         <p class="input-pergunta ">{{ questionario.questao_select.titulo }}</p>
         <p class="input-descricao ">{{ questionario.questao_select.descricao }}</p>
+        <input v-model="questionario.resposta"  class="input-text-area"/>
 
-
-        <textarea v-model="questionario.resposta" class="input-text-area">Uma resposta simples</textarea>
     </div>
 </template>
 
