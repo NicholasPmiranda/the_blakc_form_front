@@ -59,7 +59,7 @@ onMounted(async () => {
                 <template #content>
                     <div class="flex justify-between items-center">
                         <div>
-                            UMA LOGO BONITA BEM AQUI
+                           <img width="200"  src="../assets/logos/logomarca_horizontal_branco_e_roxo.svg"/>
                         </div>
                         <div>
                             <Button size="small" aria-controls="overlay_menu" aria-haspopup="true" icon="pi pi-ellipsis-v" type="button"

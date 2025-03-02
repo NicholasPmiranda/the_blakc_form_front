@@ -41,8 +41,11 @@ const handleLogin = async () => {
         <div class="hidden md:flex w-1/2   justify-center">
             <login-s-v-g/>
         </div>
-        <div class="w-full md:w-1/2 h-full flex  items-center justify-center">
-            <div class="" >
+        <div class="w-full md:w-1/2 h-full flex  items-center justify-center ">
+
+            <div class=" " >
+                <img class="mb-20" width="300" src="../../assets/logos/logomarca_vertical_branco_roxo.svg"/>
+
                 <div class="text-center mb-5">
                     <!-- Opcional: Adicione um logo aqui -->
                     <div class="text-900 text-3xl font-medium mb-3">Bem-vindo!</div>
