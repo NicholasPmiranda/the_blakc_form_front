@@ -6,6 +6,9 @@ export const useEditFormStore = defineStore('editFormStore', {
         lista_questao: null,
         form_select: {},
         checkbox_select: [],
+        form: {
+            nome: ''
+        },
         questao_select: {
             id: 0,
             tipo: "",
@@ -77,6 +80,18 @@ export const useEditFormStore = defineStore('editFormStore', {
             this.loading = false
             return true
         },
+
+        async updateName(form_id) {
+            this.loading = true
+
+            await Axios.post(`/api/form/update/name/${form_id}`, {
+                nome: this.form.nome
+            })
+
+            this.loading = false
+            return true
+        },
+
 
         async updateObrigatorio(questao_id, index) {
             this.loading = true
@@ -257,7 +272,8 @@ export const useEditFormStore = defineStore('editFormStore', {
             this.loading = true
             try {
                 const form = await Axios.get('api/form/' + form_id)
-                this.form_select = form.data
+                console.log(form.data)
+                this.form = form.data
             } catch (error) {
                 console.error('Erro :', error)
             }
