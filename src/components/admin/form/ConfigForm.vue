@@ -38,15 +38,15 @@ import Utms from "@/components/admin/form/config/Utms.vue";
                         <Rastreio/>
                     </AccordionContent>
                 </AccordionPanel>
-                <AccordionPanel value="4">
-                    <AccordionHeader>
-                        <Button label="Utms" variant="text" />
+<!--                <AccordionPanel value="4">-->
+<!--                    <AccordionHeader>-->
+<!--                        <Button label="Utms" variant="text" />-->
 
-                    </AccordionHeader>
-                    <AccordionContent>
-                        <Utms/>
-                    </AccordionContent>
-                </AccordionPanel>
+<!--                    </AccordionHeader>-->
+<!--                    <AccordionContent>-->
+<!--                        <Utms/>-->
+<!--                    </AccordionContent>-->
+<!--                </AccordionPanel>-->
             </Accordion>
         </template>
     </Card>
