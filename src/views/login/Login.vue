@@ -46,6 +46,7 @@ const handleLogin = async () => {
             <div class=" " >
                 <img class="mb-20" width="300" src="../../assets/logos/logomarca_vertical_branco_roxo.svg"/>
 
+
                 <div class="text-center mb-5">
                     <!-- Opcional: Adicione um logo aqui -->
                     <div class="text-900 text-3xl font-medium mb-3">Bem-vindo!</div>

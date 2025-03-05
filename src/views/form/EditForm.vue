@@ -47,9 +47,9 @@ async function publicar() {
                     <Button :variant="tab_select === 'opcao' ? 'outlined' : 'text'"
                             icon="pi pi-cog" label="Opções" size="small"
                             @click="setTab('opcao')"/>
-                    <Button :variant="tab_select === 'compartilhar' ? 'outlined' : 'text'"
-                            icon="pi pi-share-alt" label="Compartilhar" size="small"
-                            @click="setTab('compartilhar')"/>
+<!--                    <Button :variant="tab_select === 'compartilhar' ? 'outlined' : 'text'"-->
+<!--                            icon="pi pi-share-alt" label="Compartilhar" size="small"-->
+<!--                            @click="setTab('compartilhar')"/>-->
                     <Button :variant="tab_select === 'analicts' ? 'outlined' : 'text'"
                             icon="pi pi-chart-line" label="analytics" size="small"
                             @click="setTab('analicts')"/>
@@ -72,7 +72,7 @@ async function publicar() {
     <div class="flex  ">
         <EditoForm v-if="tab_select === 'editor'"/>
         <ConfigForm v-if="tab_select === 'opcao'"/>
-        <Compartilhar v-if="tab_select === 'compartilhar'"/>
+<!--        <Compartilhar v-if="tab_select === 'compartilhar'"/>-->
         <Analitics v-if="tab_select === 'analicts'"/>
         <RespostaForm v-if="tab_select === 'respostas'"/>
     </div>
